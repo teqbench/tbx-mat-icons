@@ -4,9 +4,9 @@ This file provides guidance for Claude Code when working in this repository.
 
 ## Package Overview
 
-<!-- TODO: Describe what this package does and its primary use case -->
+Abstract icon service contracts for Angular Material. Provides `SvgIconService` for inline SVG registration via `MatIconRegistry` and `FontIconService` for font ligature resolution. Both are generic abstract classes — concrete implementations map domain keys to icon names.
 
-This is a `@teqbench` npm package built with TypeScript.
+This is a `@teqbench` Angular library package (`tbx-mat-*`) built with TypeScript and ng-packagr.
 
 ## Tech Stack
 
@@ -78,5 +78,3 @@ Follow **Conventional Commits** strictly:
 - Never delete branches.
 - Never modify CI workflow files without explicit instruction.
 - Never modify `release-please-config.json`, `.release-please-manifest.json`, or `CHANGELOG.md`.
-
-<!-- TODO: Add package-specific guidance below -->
