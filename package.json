@@ -1,6 +1,6 @@
 {
   "name": "@teqbench/tbx-mat-icons",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Abstract icon service contracts for Angular Material. Provides SvgIconService for inline SVG registration via MatIconRegistry and FontIconService for font ligature resolution. Both are generic abstract classes — concrete implementations map domain keys to icon names.",
   "type": "module",
   "license": "Apache-2.0",
