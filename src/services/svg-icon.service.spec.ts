@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { Injectable } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
-import { SvgIconService } from './svg-icon.service';
+import { TbxMatSvgIconService } from './svg-icon.service';
 
 // Concrete test subclass to exercise protected register() and abstract resolve().
 enum TestIcon {
@@ -11,7 +11,7 @@ enum TestIcon {
 }
 
 @Injectable()
-class TestSvgIconService extends SvgIconService<TestIcon> {
+class TestTbxMatSvgIconService extends TbxMatSvgIconService<TestIcon> {
     private readonly icons = new Map<string, string>();
 
     constructor() {
@@ -34,21 +34,21 @@ class TestSvgIconService extends SvgIconService<TestIcon> {
     }
 }
 
-describe('SvgIconService', () => {
-    let service: TestSvgIconService;
+describe('TbxMatSvgIconService', () => {
+    let service: TestTbxMatSvgIconService;
 
-    function setup(): TestSvgIconService {
+    function setup(): TestTbxMatSvgIconService {
         TestBed.configureTestingModule({
-            providers: [TestSvgIconService],
+            providers: [TestTbxMatSvgIconService],
         });
 
-        return TestBed.inject(TestSvgIconService);
+        return TestBed.inject(TestTbxMatSvgIconService);
     }
 
     it('should be injectable', () => {
         service = setup();
-        expect(service).toBeInstanceOf(TestSvgIconService);
-        expect(service).toBeInstanceOf(SvgIconService);
+        expect(service).toBeInstanceOf(TestTbxMatSvgIconService);
+        expect(service).toBeInstanceOf(TbxMatSvgIconService);
     });
 
     it('should register SVG icons with MatIconRegistry via register()', () => {
