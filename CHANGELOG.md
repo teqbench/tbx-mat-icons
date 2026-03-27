@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/teqbench/tbx-mat-icons/compare/v0.1.0...v1.0.0) (2026-03-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** All public exports have been renamed with TbxMat/TBX_MAT_ prefix.
+
+### Features
+
+* **api:** prefix all exports with TbxMat/TBX_MAT_ naming convention ([0111634](https://github.com/teqbench/tbx-mat-icons/commit/01116345287a94af3d496573e24f9c7f50514355))
+
 ## 0.1.0 (2026-03-25)
 
 
