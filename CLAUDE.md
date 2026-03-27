@@ -4,7 +4,7 @@ This file provides guidance for Claude Code when working in this repository.
 
 ## Package Overview
 
-Abstract icon service contracts for Angular Material. Provides `SvgIconService` for inline SVG registration via `MatIconRegistry` and `FontIconService` for font ligature resolution. Both are generic abstract classes — concrete implementations map domain keys to icon names.
+Abstract icon service contracts for Angular Material. Provides `TbxMatSvgIconService` for inline SVG registration via `MatIconRegistry` and `TbxMatFontIconService` for font ligature resolution. Both are generic abstract classes — concrete implementations map domain keys to icon names.
 
 This is a `@teqbench` Angular library package (`tbx-mat-*`) built with TypeScript and ng-packagr.
 
