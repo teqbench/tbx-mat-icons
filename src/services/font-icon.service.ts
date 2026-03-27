@@ -1,11 +1,41 @@
+import { inject, InjectionToken } from '@angular/core';
+
+/**
+ * Injection token for setting a default font set at the application level.
+ *
+ * When provided (typically in the root `ApplicationConfig`), any
+ * `TbxMatFontIconService` subclass that does not pass a `fontSet` to `super()`
+ * will use this value automatically.
+ *
+ * @example Providing a default font set for the entire application:
+ * ```typescript
+ * // app.config.ts
+ * import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET, TBX_MAT_ICON_FONT_SET_MATERIAL_SYMBOLS_ROUNDED }
+ *     from '@teqbench/tbx-mat-icons';
+ *
+ * export const appConfig: ApplicationConfig = {
+ *     providers: [
+ *         { provide: TBX_MAT_FONT_ICON_DEFAULT_FONT_SET, useValue: TBX_MAT_ICON_FONT_SET_MATERIAL_SYMBOLS_ROUNDED },
+ *     ],
+ * };
+ * ```
+ */
+export const TBX_MAT_FONT_ICON_DEFAULT_FONT_SET = new InjectionToken<string>(
+    'TBX_MAT_FONT_ICON_DEFAULT_FONT_SET'
+);
+
 /**
  * Abstract base class for font-based icon services.
  *
  * Provides the `fontSet` identifier and the `resolve()` contract for
  * mapping domain-specific keys to font ligature names. The `fontSet`
- * value is locked down at construction via `super()` and exposed as
- * a readonly property — it identifies which icon font this service
- * resolves against (e.g., 'Material Symbols Rounded').
+ * value is determined in this order:
+ *
+ * 1. If `fontSet` is passed to the constructor via `super(fontSet)`, that
+ *    value is used for this instance.
+ * 2. Otherwise, the value provided via the `TBX_MAT_FONT_ICON_DEFAULT_FONT_SET`
+ *    injection token is used (typically set once in the application config).
+ * 3. If neither is available, an error is thrown at construction time.
  *
  * When the consuming component uses the global font set (configured via
  * MAT_ICON_DEFAULT_OPTIONS), `fontSet` does not need to be passed to
@@ -19,17 +49,24 @@
  * of `resolve()` encourages callers to use the constrained type while the
  * `string` overload provides a fallback for dynamic lookups.
  *
- * @example Extending for Material Symbols severity icons:
+ * @example Extending with an explicit font set (constructor override):
  * ```typescript
- * const SEVERITY_LIGATURE = new Map<string, string>([
- *     [Severity.Success, 'check_circle'],
- *     [Severity.Error, 'cancel'],
- * ]);
- *
  * @Injectable({ providedIn: 'root' })
- * export class MySeverityFontIconService extends FontIconService<Severity> {
+ * export class SharpIconService extends TbxMatFontIconService<Severity> {
  *     constructor() {
- *         super('material-symbols-rounded');
+ *         super(TBX_MAT_ICON_FONT_SET_MATERIAL_SYMBOLS_SHARP);
+ *     }
+ *     // ...
+ * }
+ * ```
+ *
+ * @example Extending with the application-level default:
+ * ```typescript
+ * // Requires TBX_MAT_FONT_ICON_DEFAULT_FONT_SET to be provided in the app config.
+ * @Injectable({ providedIn: 'root' })
+ * export class MySeverityFontIconService extends TbxMatFontIconService<Severity> {
+ *     constructor() {
+ *         super(); // uses TBX_MAT_FONT_ICON_DEFAULT_FONT_SET token value
  *     }
  *
  *     resolve(name: Severity): string | undefined;
@@ -43,16 +80,25 @@
  * @typeParam T - The icon key type. Defaults to `string`. Narrow to an enum
  *               or union for compile-time safety on `resolve()`.
  */
-export abstract class FontIconService<T extends string = string> {
+export abstract class TbxMatFontIconService<T extends string = string> {
     /** The icon font set this service resolves against. */
     readonly fontSet: string;
 
     /**
-     * @param fontSet - The font set identifier (e.g., 'Material Symbols Rounded').
-     *                  Set once via `super()` in subclasses. Readonly from that point.
+     * @param fontSet - Optional font set identifier (e.g., 'Material Symbols Rounded').
+     *                  When provided, takes precedence over the application-level default.
+     *                  When omitted, falls back to the `TBX_MAT_FONT_ICON_DEFAULT_FONT_SET` token.
      */
-    constructor(fontSet: string) {
-        this.fontSet = fontSet;
+    constructor(fontSet?: string) {
+        this.fontSet =
+            fontSet ??
+            inject(TBX_MAT_FONT_ICON_DEFAULT_FONT_SET, { optional: true }) ??
+            (() => {
+                throw new Error(
+                    'TbxMatFontIconService: no fontSet provided and TBX_MAT_FONT_ICON_DEFAULT_FONT_SET token is not configured. ' +
+                        'Either pass fontSet to super() or provide the TBX_MAT_FONT_ICON_DEFAULT_FONT_SET token in your application config.'
+                );
+            })();
     }
 
     /**

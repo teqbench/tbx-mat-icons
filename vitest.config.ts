@@ -9,6 +9,10 @@ export default defineConfig({
         setupFiles: ['src/test-setup.ts'],
         passWithNoTests: false,
         coverage: {
+            exclude: [
+                // Constants
+                'src/constants/font-set.constants.ts',
+            ],
             thresholds: {
                 lines: 80,
                 functions: 80,

@@ -18,7 +18,7 @@ import { DomSanitizer } from '@angular/platform-browser';
  * of `resolve()` encourages callers to use the constrained type while the
  * `string` overload provides a fallback for dynamic lookups.
  *
- * This is the SVG counterpart to FontIconService. Font services resolve
+ * This is the SVG counterpart to TbxMatFontIconService. Font services resolve
  * ligature name strings; SVG services register inline SVG markup with the
  * Material icon registry.
  *
@@ -29,7 +29,7 @@ import { DomSanitizer } from '@angular/platform-browser';
  * ]);
  *
  * @Injectable({ providedIn: 'root' })
- * export class MyBrandedSvgIconService extends SvgIconService<MyBrand> {
+ * export class MyBrandedSvgIconService extends TbxMatSvgIconService<MyBrand> {
  *     constructor() {
  *         super();
  *         for (const [name, svg] of BRAND_SVG) {
@@ -48,7 +48,7 @@ import { DomSanitizer } from '@angular/platform-browser';
  * @typeParam T - The icon key type. Defaults to `string`. Narrow to an enum
  *               or union for compile-time safety on `register()` and `resolve()`.
  */
-export abstract class SvgIconService<T extends string = string> {
+export abstract class TbxMatSvgIconService<T extends string = string> {
     private readonly iconRegistry = inject(MatIconRegistry);
     private readonly sanitizer = inject(DomSanitizer);
     private readonly registered = new Set<string>();
