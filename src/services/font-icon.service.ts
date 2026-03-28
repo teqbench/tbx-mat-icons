@@ -1,6 +1,6 @@
 import { inject, InjectionToken } from '@angular/core';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
-import type { ITbxIconResolver } from '../contracts/icon-resolver.contract';
+import type { ITbxMatIconResolver } from '../contracts/icon-resolver.contract';
 
 /**
  * Injection token for setting a default fontSet at the application level.
@@ -148,7 +148,7 @@ export const TBX_MAT_FONT_ICON_DEFAULT_FONT_SET = new InjectionToken<string>(
  */
 export abstract class TbxMatFontIconService<
     T extends string = string,
-> implements ITbxIconResolver<T> {
+> implements ITbxMatIconResolver<T> {
     /** The fontSet this service resolves against. */
     readonly fontSet: string;
 
