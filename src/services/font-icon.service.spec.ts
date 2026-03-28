@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
 import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET, TbxMatFontIconService } from './font-icon.service';
 
 enum TestSeverity {
@@ -8,10 +9,10 @@ enum TestSeverity {
     Error = 'error',
 }
 
-const LIGATURES = new Map<string, string>([
-    [TestSeverity.Success, 'check_circle'],
-    [TestSeverity.Error, 'cancel'],
-]);
+const LIGATURES: Record<TestSeverity, string> = {
+    [TestSeverity.Success]: 'check_circle',
+    [TestSeverity.Error]: 'cancel',
+};
 
 /** Subclass that passes fontSet explicitly via super(). */
 @Injectable()
@@ -23,11 +24,11 @@ class ExplicitFontSetService extends TbxMatFontIconService<TestSeverity> {
     override resolve(name: TestSeverity): string | undefined;
     override resolve(name: string): string | undefined;
     override resolve(name: string): string | undefined {
-        return LIGATURES.get(name);
+        return LIGATURES[name as TestSeverity];
     }
 }
 
-/** Subclass that omits fontSet — relies on the injection token default. */
+/** Subclass that omits fontSet — relies on token or MAT_ICON_DEFAULT_OPTIONS fallback. */
 @Injectable()
 class DefaultFontSetService extends TbxMatFontIconService<TestSeverity> {
     constructor() {
@@ -37,7 +38,7 @@ class DefaultFontSetService extends TbxMatFontIconService<TestSeverity> {
     override resolve(name: TestSeverity): string | undefined;
     override resolve(name: string): string | undefined;
     override resolve(name: string): string | undefined {
-        return LIGATURES.get(name);
+        return LIGATURES[name as TestSeverity];
     }
 }
 
@@ -78,7 +79,7 @@ describe('TbxMatFontIconService', () => {
             expect(service).toBeInstanceOf(TbxMatFontIconService);
         });
 
-        it('should prefer constructor fontSet over injected default', () => {
+        it('should prefer constructor fontSet over TBX_MAT_FONT_ICON_DEFAULT_FONT_SET', () => {
             TestBed.configureTestingModule({
                 providers: [
                     ExplicitFontSetService,
@@ -91,10 +92,24 @@ describe('TbxMatFontIconService', () => {
             service = TestBed.inject(ExplicitFontSetService);
             expect(service.fontSet).toBe('Material Symbols Rounded');
         });
+
+        it('should prefer constructor fontSet over MAT_ICON_DEFAULT_OPTIONS', () => {
+            TestBed.configureTestingModule({
+                providers: [
+                    ExplicitFontSetService,
+                    {
+                        provide: MAT_ICON_DEFAULT_OPTIONS,
+                        useValue: { fontSet: 'material-symbols-outlined' },
+                    },
+                ],
+            });
+            service = TestBed.inject(ExplicitFontSetService);
+            expect(service.fontSet).toBe('Material Symbols Rounded');
+        });
     });
 
     describe('with TBX_MAT_FONT_ICON_DEFAULT_FONT_SET token', () => {
-        it('should use the injected default when no fontSet is passed to super()', () => {
+        it('should use the token when no fontSet is passed to super()', () => {
             TestBed.configureTestingModule({
                 providers: [
                     DefaultFontSetService,
@@ -107,16 +122,61 @@ describe('TbxMatFontIconService', () => {
             const service = TestBed.inject(DefaultFontSetService);
             expect(service.fontSet).toBe('material-symbols-rounded');
         });
+
+        it('should prefer TBX_MAT_FONT_ICON_DEFAULT_FONT_SET over MAT_ICON_DEFAULT_OPTIONS', () => {
+            TestBed.configureTestingModule({
+                providers: [
+                    DefaultFontSetService,
+                    {
+                        provide: TBX_MAT_FONT_ICON_DEFAULT_FONT_SET,
+                        useValue: 'material-symbols-rounded',
+                    },
+                    {
+                        provide: MAT_ICON_DEFAULT_OPTIONS,
+                        useValue: { fontSet: 'material-symbols-sharp' },
+                    },
+                ],
+            });
+            const service = TestBed.inject(DefaultFontSetService);
+            expect(service.fontSet).toBe('material-symbols-rounded');
+        });
     });
 
-    describe('with neither constructor arg nor token', () => {
-        it('should throw when no fontSet is available', () => {
+    describe('with MAT_ICON_DEFAULT_OPTIONS fallback', () => {
+        it('should use MAT_ICON_DEFAULT_OPTIONS.fontSet when no constructor arg or token', () => {
+            TestBed.configureTestingModule({
+                providers: [
+                    DefaultFontSetService,
+                    {
+                        provide: MAT_ICON_DEFAULT_OPTIONS,
+                        useValue: { fontSet: 'material-symbols-sharp' },
+                    },
+                ],
+            });
+            const service = TestBed.inject(DefaultFontSetService);
+            expect(service.fontSet).toBe('material-symbols-sharp');
+        });
+
+        it('should skip MAT_ICON_DEFAULT_OPTIONS when it has no fontSet property', () => {
+            TestBed.configureTestingModule({
+                providers: [
+                    DefaultFontSetService,
+                    {
+                        provide: MAT_ICON_DEFAULT_OPTIONS,
+                        useValue: {},
+                    },
+                ],
+            });
+            expect(() => TestBed.inject(DefaultFontSetService)).toThrow(/no fontSet resolved/);
+        });
+    });
+
+    describe('with no fontSet source', () => {
+        it('should throw when no fontSet is available from any source', () => {
             TestBed.configureTestingModule({
                 providers: [DefaultFontSetService],
             });
-            expect(() => TestBed.inject(DefaultFontSetService)).toThrow(
-                /no fontSet provided and TBX_MAT_FONT_ICON_DEFAULT_FONT_SET token is not configured/
-            );
+            expect(() => TestBed.inject(DefaultFontSetService)).toThrow(/no fontSet resolved/);
         });
     });
 });

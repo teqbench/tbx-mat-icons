@@ -10,22 +10,24 @@ enum TestIcon {
     Badge = 'badge',
 }
 
+const ICON_SVG: Record<TestIcon, string> = {
+    [TestIcon.Logo]: '<svg>logo</svg>',
+    [TestIcon.Badge]: '<svg>badge</svg>',
+};
+
 @Injectable()
 class TestTbxMatSvgIconService extends TbxMatSvgIconService<TestIcon> {
-    private readonly icons = new Map<string, string>();
-
     constructor() {
         super();
-        this.icons.set(TestIcon.Logo, TestIcon.Logo);
-        this.icons.set(TestIcon.Badge, TestIcon.Badge);
-        this.register(TestIcon.Logo, '<svg>logo</svg>');
-        this.register(TestIcon.Badge, '<svg>badge</svg>');
+        for (const [name, svg] of Object.entries(ICON_SVG)) {
+            this.register(name, svg);
+        }
     }
 
     override resolve(name: TestIcon): string | undefined;
     override resolve(name: string): string | undefined;
     override resolve(name: string): string | undefined {
-        return this.icons.get(name);
+        return name in ICON_SVG ? name : undefined;
     }
 
     // Expose register for direct testing.

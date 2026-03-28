@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import type { ITbxIconResolver } from '../contracts/icon-resolver.contract';
 
 /**
  * Abstract base class for SVG-based icon services.
@@ -24,31 +25,43 @@ import { DomSanitizer } from '@angular/platform-browser';
  *
  * @example Extending for a custom SVG icon set:
  * ```typescript
- * const BRAND_SVG = new Map<string, string>([
- *     [MyBrand.Logo, '<svg>…</svg>'],
- * ]);
+ * enum BrandIcon {
+ *     Logo = 'logo',
+ *     Wordmark = 'wordmark',
+ * }
+ *
+ * const BRAND_SVG: Record<BrandIcon, string> = {
+ *     [BrandIcon.Logo]: '<svg>…</svg>',
+ *     [BrandIcon.Wordmark]: '<svg>…</svg>',
+ * };
  *
  * @Injectable({ providedIn: 'root' })
- * export class MyBrandedSvgIconService extends TbxMatSvgIconService<MyBrand> {
+ * export class BrandSvgIconService extends TbxMatSvgIconService<BrandIcon> {
  *     constructor() {
  *         super();
- *         for (const [name, svg] of BRAND_SVG) {
+ *         for (const [name, svg] of Object.entries(BRAND_SVG)) {
  *             this.register(name, svg);
  *         }
  *     }
  *
- *     resolve(name: MyBrand): string | undefined;
+ *     resolve(name: BrandIcon): string | undefined;
  *     resolve(name: string): string | undefined;
  *     resolve(name: string): string | undefined {
- *         return BRAND_SVG.has(name) ? name : undefined;
+ *         return name in BRAND_SVG ? name : undefined;
  *     }
  * }
+ *
+ * // Component uses svgIcon binding:
+ * // readonly icons = inject(BrandSvgIconService);
+ * // <mat-icon [svgIcon]="icons.resolve(BrandIcon.Logo)!"></mat-icon>
  * ```
  *
  * @typeParam T - The icon key type. Defaults to `string`. Narrow to an enum
  *               or union for compile-time safety on `register()` and `resolve()`.
  */
-export abstract class TbxMatSvgIconService<T extends string = string> {
+export abstract class TbxMatSvgIconService<
+    T extends string = string,
+> implements ITbxIconResolver<T> {
     private readonly iconRegistry = inject(MatIconRegistry);
     private readonly sanitizer = inject(DomSanitizer);
     private readonly registered = new Set<string>();
