@@ -2,18 +2,23 @@
  * tbx-mat-icons — abstract icon service contracts for Angular Material.
  *
  * Public API:
- *   - TbxMatSvgIconService  — abstract base for SVG icon registration via MatIconRegistry
- *   - TbxMatFontIconService — abstract base for font-based icon ligature resolution
+ *   - ITbxIconResolver         — generic resolve contract implemented by both service bases
+ *   - TbxMatFontIconService    — abstract base for font-based icon ligature resolution
+ *   - TbxMatSvgIconService     — abstract base for SVG icon registration via MatIconRegistry
+ *   - TBX_MAT_FONT_ICON_DEFAULT_FONT_SET — injection token for application-level fontSet default
+ *   - TBX_MAT_ICON_FONT_SET_* — fontSet string constants for Material Symbols variants
  *
- * TbxMatSvgIconService encapsulates MatIconRegistry + DomSanitizer plumbing.
- * TbxMatFontIconService carries the font set identifier and the resolve contract.
- * Both are generic — narrow the type parameter to an enum for typed keys.
+ * Both service bases implement ITbxIconResolver and are generic — narrow the
+ * type parameter to an enum or union for typed icon keys.
  */
+
+// Contracts
+export type { ITbxIconResolver } from './contracts/icon-resolver.contract';
 
 // Constants
 export * from './contants/font-set.constants';
 
-// Abstract contracts
+// Abstract services
 export { TbxMatSvgIconService } from './services/svg-icon.service';
 export {
     TBX_MAT_FONT_ICON_DEFAULT_FONT_SET,
