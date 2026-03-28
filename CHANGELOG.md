@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/teqbench/tbx-mat-icons/compare/v1.0.0...v2.0.0) (2026-03-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* ITbxIconResolver is a new export. Existing code is unaffected but downstream packages may now implement or reference it.
+
+### Code Refactoring
+
+* add ITbxIconResolver contract and MAT_ICON_DEFAULT_OPTIONS fallback ([b27c94a](https://github.com/teqbench/tbx-mat-icons/commit/b27c94ab40a0653ffc3f426b6b3fbc315e70147c))
+
 ## [1.0.0](https://github.com/teqbench/tbx-mat-icons/compare/v0.1.0...v1.0.0) (2026-03-27)
 
 
