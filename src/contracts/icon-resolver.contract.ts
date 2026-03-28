@@ -7,7 +7,7 @@
  * @typeParam T - The icon key type. Defaults to `string`. Narrow to an enum
  *               or union for compile-time safety.
  */
-export interface ITbxIconResolver<T extends string = string> {
+export interface ITbxMatIconResolver<T extends string = string> {
     /**
      * Resolve an icon key to an icon identifier.
      *

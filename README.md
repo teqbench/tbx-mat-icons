@@ -186,7 +186,7 @@ readonly severity = Severity.Success; // or from a signal, input, etc.
 
 ## API Reference
 
-### `ITbxIconResolver<T extends string = string>`
+### `ITbxMatIconResolver<T extends string = string>`
 
 Contract for resolving icon keys to usable icon identifiers. Implemented by both `TbxMatFontIconService` and `TbxMatSvgIconService`.
 
