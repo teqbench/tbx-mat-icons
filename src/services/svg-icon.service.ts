@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import type { ITbxIconResolver } from '../contracts/icon-resolver.contract';
+import type { ITbxMatIconResolver } from '../contracts/icon-resolver.contract';
 
 /**
  * Abstract base class for SVG-based icon services.
@@ -61,7 +61,7 @@ import type { ITbxIconResolver } from '../contracts/icon-resolver.contract';
  */
 export abstract class TbxMatSvgIconService<
     T extends string = string,
-> implements ITbxIconResolver<T> {
+> implements ITbxMatIconResolver<T> {
     private readonly iconRegistry = inject(MatIconRegistry);
     private readonly sanitizer = inject(DomSanitizer);
     private readonly registered = new Set<string>();
