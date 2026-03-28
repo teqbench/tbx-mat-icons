@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/teqbench/tbx-mat-icons/compare/v2.0.0...v3.0.0) (2026-03-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* ITbxIconResolver renamed to ITbxMatIconResolver.
+
+### Code Refactoring
+
+* rename ITbxIconResolver to ITbxMatIconResolver ([0b17963](https://github.com/teqbench/tbx-mat-icons/commit/0b179632f5e5e0b6792479ec753386619519ed0e))
+
 ## [2.0.0](https://github.com/teqbench/tbx-mat-icons/compare/v1.0.0...v2.0.0) (2026-03-28)
 
 
