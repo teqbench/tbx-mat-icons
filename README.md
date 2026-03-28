@@ -2,7 +2,7 @@
 
 ![Build Status](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-build-status.json) ![Tests](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-tests.json) ![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-coverage.json) ![Version](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-version.json) ![Build Number](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-build-number.json)
 
-> Abstract icon service contracts for Angular Material. Provides `TbxMatSvgIconService` for inline SVG registration via `MatIconRegistry` and `TbxMatFontIconService` for font ligature resolution. Both are generic abstract classes — concrete implementations map domain keys to icon names.
+> Abstract icon service contracts for Angular Material projects. Provides `TbxMatSvgIconService` for inline SVG registration via `MatIconRegistry` and `TbxMatFontIconService` for font ligature resolution. Both are generic abstract classes — concrete implementations map domain keys to icon names.
 
 ## Installation
 
