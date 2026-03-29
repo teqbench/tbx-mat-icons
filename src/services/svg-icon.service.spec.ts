@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { TbxMatSvgIconService } from './svg-icon.service';
 
-// Concrete test subclass to exercise protected register() and abstract resolve().
+// Concrete test subclass to exercise protected register() and inherited resolve().
 enum TestIcon {
     Logo = 'logo',
     Badge = 'badge',
@@ -22,12 +22,6 @@ class TestTbxMatSvgIconService extends TbxMatSvgIconService<TestIcon> {
         for (const [name, svg] of Object.entries(ICON_SVG)) {
             this.register(name, svg);
         }
-    }
-
-    override resolve(name: TestIcon): string | undefined;
-    override resolve(name: string): string | undefined;
-    override resolve(name: string): string | undefined {
-        return name in ICON_SVG ? name : undefined;
     }
 
     // Expose register for direct testing.

@@ -2,7 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
-import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET, TbxMatFontIconService } from './font-icon.service';
+import { TbxMatFontIconService } from './font-icon.service';
+import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/notification-default-icon-font-set.token';
 
 enum TestSeverity {
     Success = 'success',
@@ -19,12 +20,9 @@ const LIGATURES: Record<TestSeverity, string> = {
 class ExplicitFontSetService extends TbxMatFontIconService<TestSeverity> {
     constructor() {
         super('Material Symbols Rounded');
-    }
-
-    override resolve(name: TestSeverity): string | undefined;
-    override resolve(name: string): string | undefined;
-    override resolve(name: string): string | undefined {
-        return LIGATURES[name as TestSeverity];
+        for (const [name, ligature] of Object.entries(LIGATURES)) {
+            this.register(name, ligature);
+        }
     }
 }
 
@@ -33,12 +31,9 @@ class ExplicitFontSetService extends TbxMatFontIconService<TestSeverity> {
 class DefaultFontSetService extends TbxMatFontIconService<TestSeverity> {
     constructor() {
         super();
-    }
-
-    override resolve(name: TestSeverity): string | undefined;
-    override resolve(name: string): string | undefined;
-    override resolve(name: string): string | undefined {
-        return LIGATURES[name as TestSeverity];
+        for (const [name, ligature] of Object.entries(LIGATURES)) {
+            this.register(name, ligature);
+        }
     }
 }
 
