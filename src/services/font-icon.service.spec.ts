@@ -2,7 +2,9 @@ import { describe, it, expect } from 'vitest';
 import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
-import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET, TbxMatFontIconService } from './font-icon.service';
+import { TbxMatFontIconService } from './font-icon.service';
+import { TbxMatIconType } from '../types/icon-type.type';
+import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-font-set.token';
 
 enum TestSeverity {
     Success = 'success',
@@ -14,17 +16,33 @@ const LIGATURES: Record<TestSeverity, string> = {
     [TestSeverity.Error]: 'cancel',
 };
 
-/** Subclass that passes fontSet explicitly via super(). */
+/** Subclass that passes fontSet explicitly via super(). Uses initialize() for registration. */
 @Injectable()
 class ExplicitFontSetService extends TbxMatFontIconService<TestSeverity> {
     constructor() {
         super('Material Symbols Rounded');
     }
 
-    override resolve(name: TestSeverity): string | undefined;
-    override resolve(name: string): string | undefined;
-    override resolve(name: string): string | undefined {
-        return LIGATURES[name as TestSeverity];
+    protected override initialize(): void {
+        super.initialize();
+        for (const [name, ligature] of Object.entries(LIGATURES)) {
+            this.register(name, ligature);
+        }
+    }
+
+    /** Expose register for direct testing. */
+    testRegister(name: string, value: string): void {
+        this.register(name, value);
+    }
+
+    /** Expose initialize for direct testing. */
+    testInitialize(): void {
+        this.initialize();
+    }
+
+    /** Expose reset for direct testing. */
+    testReset(): void {
+        this.reset();
     }
 }
 
@@ -35,10 +53,11 @@ class DefaultFontSetService extends TbxMatFontIconService<TestSeverity> {
         super();
     }
 
-    override resolve(name: TestSeverity): string | undefined;
-    override resolve(name: string): string | undefined;
-    override resolve(name: string): string | undefined {
-        return LIGATURES[name as TestSeverity];
+    protected override initialize(): void {
+        super.initialize();
+        for (const [name, ligature] of Object.entries(LIGATURES)) {
+            this.register(name, ligature);
+        }
     }
 }
 
@@ -52,6 +71,11 @@ describe('TbxMatFontIconService', () => {
             });
             return TestBed.inject(ExplicitFontSetService);
         }
+
+        it('should have iconType "font"', () => {
+            service = setup();
+            expect(service.iconType).toBe(TbxMatIconType.Font);
+        });
 
         it('should set fontSet via constructor', () => {
             service = setup();
@@ -91,6 +115,31 @@ describe('TbxMatFontIconService', () => {
             });
             service = TestBed.inject(ExplicitFontSetService);
             expect(service.fontSet).toBe('Material Symbols Rounded');
+        });
+
+        it('should replace existing registration when re-registering the same name', () => {
+            service = setup();
+            service.testRegister('success', 'task_alt');
+
+            expect(service.resolve(TestSeverity.Success)).toBe('task_alt');
+        });
+
+        it('should clear all registrations on reset()', () => {
+            service = setup();
+            service.testReset();
+
+            expect(service.resolve(TestSeverity.Success)).toBeUndefined();
+            expect(service.resolve(TestSeverity.Error)).toBeUndefined();
+        });
+
+        it('should restore defaults on initialize()', () => {
+            service = setup();
+            service.testRegister('success', 'task_alt');
+            expect(service.resolve(TestSeverity.Success)).toBe('task_alt');
+
+            service.testInitialize();
+            expect(service.resolve(TestSeverity.Success)).toBe('check_circle');
+            expect(service.resolve(TestSeverity.Error)).toBe('cancel');
         });
 
         it('should prefer constructor fontSet over MAT_ICON_DEFAULT_OPTIONS', () => {

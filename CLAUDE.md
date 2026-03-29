@@ -4,7 +4,7 @@ This file provides guidance for Claude Code when working in this repository.
 
 ## Package Overview
 
-Abstract icon service contracts for Angular Material. Provides `TbxMatSvgIconService` for inline SVG registration via `MatIconRegistry` and `TbxMatFontIconService` for font ligature resolution. Both are generic abstract classes — concrete implementations map domain keys to icon names.
+Abstract icon service contracts for Angular Material. Provides `TbxMatBaseIconService` as the shared registration/resolution base with `initialize()`/`reset()` lifecycle hooks, `TbxMatSvgIconService` for inline SVG registration via `MatIconRegistry`, and `TbxMatFontIconService` for font ligature resolution. All are generic abstract classes — concrete implementations override `initialize()` to register domain keys.
 
 This is a `@teqbench` Angular library package (`tbx-mat-*`) built with TypeScript and ng-packagr.
 
@@ -36,7 +36,6 @@ This is a `@teqbench` Angular library package (`tbx-mat-*`) built with TypeScrip
 - `dist/` — Compiled output (git-ignored, only this directory is published)
 - `docs/` — Documentation (placeholder for package-specific guides)
 - `.github/workflows/` — CI/CD pipelines (ci, release, sync, dep-compat-check, claude)
-- `.github/dependabot.yml` — Automated dependency update PRs targeting `dev`
 
 ## Publishing
 

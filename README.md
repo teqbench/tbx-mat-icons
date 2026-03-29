@@ -2,7 +2,7 @@
 
 ![Build Status](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-build-status.json) ![Tests](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-tests.json) ![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-coverage.json) ![Version](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-version.json) ![Build Number](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-build-number.json)
 
-> Abstract icon service contracts for Angular Material projects. Provides `TbxMatSvgIconService` for inline SVG registration via `MatIconRegistry` and `TbxMatFontIconService` for font ligature resolution. Both are generic abstract classes — concrete implementations map domain keys to icon names.
+> Abstract icon service contracts for Angular Material projects. Provides `TbxMatBaseIconService` as the shared registration/resolution base, `TbxMatSvgIconService` for inline SVG registration via `MatIconRegistry`, and `TbxMatFontIconService` for font ligature resolution. All are generic abstract classes — concrete implementations override `initialize()` to register domain keys and their resolved values.
 
 ## Installation
 
@@ -38,29 +38,32 @@ const BRAND_SVG: Record<BrandIcon, string> = {
 
 @Injectable({ providedIn: 'root' })
 export class BrandSvgIconService extends TbxMatSvgIconService<BrandIcon> {
-    constructor() {
-        super();
+    protected override initialize(): void {
+        super.initialize();
         for (const [name, svg] of Object.entries(BRAND_SVG)) {
             this.register(name, svg);
         }
     }
-
-    resolve(name: BrandIcon): string | undefined;
-    resolve(name: string): string | undefined;
-    resolve(name: string): string | undefined {
-        return name in BRAND_SVG ? name : undefined;
-    }
 }
+// resolve(BrandIcon.Logo) → 'logo'
 ```
 
-Component uses `svgIcon` binding:
+Consuming component uses the `svgIcon` binding:
 
 ```typescript
-readonly icons = inject(BrandSvgIconService);
-```
+import { Component, inject } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { BrandSvgIconService, BrandIcon } from './brand-svg-icon.service';
 
-```html
-<mat-icon [svgIcon]="icons.resolve(BrandIcon.Logo)!"></mat-icon>
+@Component({
+    selector: 'app-brand',
+    imports: [MatIconModule],
+    template: `<mat-icon [svgIcon]="icons.resolve(BrandIcon.Logo)!"></mat-icon>`,
+})
+export class BrandComponent {
+    protected readonly icons = inject(BrandSvgIconService);
+    protected readonly BrandIcon = BrandIcon;
+}
 ```
 
 ### Font Icons
@@ -98,23 +101,33 @@ export class SharpIconService extends TbxMatFontIconService<Severity> {
         super(TBX_MAT_ICON_FONT_SET_MATERIAL_SYMBOLS_SHARP);
     }
 
-    resolve(name: Severity): string | undefined;
-    resolve(name: string): string | undefined;
-    resolve(name: string): string | undefined {
-        return LIGATURES[name as Severity];
+    protected override initialize(): void {
+        super.initialize();
+        for (const [name, ligature] of Object.entries(LIGATURES)) {
+            this.register(name, ligature);
+        }
     }
 }
+// resolve(Severity.Success) → 'check_circle'
 ```
 
-Component injects the service and binds `[fontSet]`:
+Consuming component injects the service and binds `[fontSet]`:
 
 ```typescript
-readonly icons = inject(SharpIconService);
-readonly severity = Severity.Success; // or from a signal, input, etc.
-```
+import { Component, inject } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { SharpIconService } from './sharp-icon.service';
+import { Severity } from './severity.enum';
 
-```html
-<mat-icon [fontSet]="icons.fontSet">{{ icons.resolve(severity) }}</mat-icon>
+@Component({
+    selector: 'app-status',
+    imports: [MatIconModule],
+    template: `<mat-icon [fontSet]="icons.fontSet">{{ icons.resolve(severity) }}</mat-icon>`,
+})
+export class StatusComponent {
+    protected readonly icons = inject(SharpIconService);
+    protected readonly severity = Severity.Success; // or from a signal, input, etc.
+}
 ```
 
 #### Step 2: fontSet from `TBX_MAT_FONT_ICON_DEFAULT_FONT_SET` token
@@ -134,22 +147,32 @@ providers: [{ provide: TBX_MAT_FONT_ICON_DEFAULT_FONT_SET, useValue: TBX_MAT_ICO
 ```typescript
 @Injectable({ providedIn: 'root' })
 export class MySeverityIconService extends TbxMatFontIconService<Severity> {
-    constructor() {
-        super(); // inherits TBX_MAT_FONT_ICON_DEFAULT_FONT_SET
+    protected override initialize(): void {
+        super.initialize();
+        for (const [name, ligature] of Object.entries(LIGATURES)) {
+            this.register(name, ligature);
+        }
     }
-    // ...
 }
 ```
 
-Component injects the service and binds `[fontSet]`:
+Consuming component injects the service and binds `[fontSet]`:
 
 ```typescript
-readonly icons = inject(MySeverityIconService);
-readonly severity = Severity.Success; // or from a signal, input, etc.
-```
+import { Component, inject } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MySeverityIconService } from './my-severity-icon.service';
+import { Severity } from './severity.enum';
 
-```html
-<mat-icon [fontSet]="icons.fontSet">{{ icons.resolve(severity) }}</mat-icon>
+@Component({
+    selector: 'app-status',
+    imports: [MatIconModule],
+    template: `<mat-icon [fontSet]="icons.fontSet">{{ icons.resolve(severity) }}</mat-icon>`,
+})
+export class StatusComponent {
+    protected readonly icons = inject(MySeverityIconService);
+    protected readonly severity = Severity.Success; // or from a signal, input, etc.
+}
 ```
 
 #### Step 3: fontSet from `MAT_ICON_DEFAULT_OPTIONS`
@@ -166,45 +189,72 @@ providers: [{ provide: MAT_ICON_DEFAULT_OPTIONS, useValue: { fontSet: 'material-
 ```typescript
 @Injectable({ providedIn: 'root' })
 export class MySeverityIconService extends TbxMatFontIconService<Severity> {
-    constructor() {
-        super(); // inherits MAT_ICON_DEFAULT_OPTIONS.fontSet
+    protected override initialize(): void {
+        super.initialize();
+        for (const [name, ligature] of Object.entries(LIGATURES)) {
+            this.register(name, ligature);
+        }
     }
-    // ...
 }
 ```
 
-Component injects the service — no `[fontSet]` binding needed:
+Consuming component injects the service — no `[fontSet]` binding needed:
 
 ```typescript
-readonly icons = inject(MySeverityIconService);
-readonly severity = Severity.Success; // or from a signal, input, etc.
-```
+import { Component, inject } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MySeverityIconService } from './my-severity-icon.service';
+import { Severity } from './severity.enum';
 
-```html
-<mat-icon>{{ icons.resolve(severity) }}</mat-icon>
+@Component({
+    selector: 'app-status',
+    imports: [MatIconModule],
+    template: `<mat-icon>{{ icons.resolve(severity) }}</mat-icon>`,
+})
+export class StatusComponent {
+    protected readonly icons = inject(MySeverityIconService);
+    protected readonly severity = Severity.Success; // or from a signal, input, etc.
+}
 ```
 
 ## API Reference
 
+### `TbxMatIconType`
+
+Enum discriminant for the icon rendering strategy. Used by consumers to determine the correct `<mat-icon>` binding.
+
+- **`TbxMatIconType.Font`** (`'font'`) — render as font ligature text content
+- **`TbxMatIconType.Svg`** (`'svg'`) — render via `[svgIcon]` binding
+
 ### `ITbxMatIconResolver<T extends string = string>`
 
-Contract for resolving icon keys to usable icon identifiers. Implemented by both `TbxMatFontIconService` and `TbxMatSvgIconService`.
+Contract for resolving icon keys to usable icon identifiers. Implemented by `TbxMatBaseIconService` and inherited by both service subclasses.
 
 - **`resolve(name: T): string | undefined`** — Resolve an icon key to an icon identifier (font ligature name or registered svgIcon name). Returns `undefined` if the key is not recognized.
 
+### `TbxMatBaseIconService<T extends string = string>`
+
+Abstract base class providing shared registration and resolution mechanics. Do not extend directly — use `TbxMatSvgIconService` or `TbxMatFontIconService`.
+
+- **`abstract readonly iconType: TbxMatIconType`** — Discriminant set by each intermediate class (`Font` or `Svg`). Consumers use this to determine the correct `<mat-icon>` binding.
+- **`protected initialize(): void`** — Initialize the registry with default icon mappings. Called from the constructor of each intermediate class. Subclasses override to register defaults via `register()`. Call again later to restore defaults after replacements.
+- **`protected reset(): void`** — Clear all registered icons from the registry.
+- **`protected register(name: T, value: string): void`** — Register an icon name and its resolved value. Re-registering the same name replaces the previous value, allowing subclasses to override parent defaults.
+- **`resolve(name: T): string | undefined`** — Look up the value registered for the given name.
+
 ### `TbxMatSvgIconService<T extends string = string>`
 
-Abstract base class for SVG-based icon services. Encapsulates `MatIconRegistry` + `DomSanitizer` plumbing.
+Abstract base class for SVG-based icon services. Extends `TbxMatBaseIconService` with `MatIconRegistry` + `DomSanitizer` integration. Sets `iconType` to `TbxMatIconType.Svg`.
 
-- **`protected register(name: T, svg: string): void`** — Register inline SVG markup with the Material icon registry.
-- **`abstract resolve(name: T): string | undefined`** — Resolve a key to a registered `svgIcon` name.
+- **`protected register(name: T, svg: string): void`** — Register inline SVG markup with the Material icon registry. The base class stores `name → name` (identity mapping); the SVG markup is stored by `MatIconRegistry`. Re-registering replaces both entries.
+- Inherits `resolve()` from `TbxMatBaseIconService` — returns the icon name for use in `[svgIcon]="name"`.
 
 ### `TbxMatFontIconService<T extends string = string>`
 
-Abstract base class for font-based icon services. Carries the fontSet identifier and the resolve contract.
+Abstract base class for font-based icon services. Extends `TbxMatBaseIconService` with fontSet resolution. Sets `iconType` to `TbxMatIconType.Font`.
 
 - **`readonly fontSet: string`** — The fontSet this service resolves against (set via constructor, `TBX_MAT_FONT_ICON_DEFAULT_FONT_SET` token, or `MAT_ICON_DEFAULT_OPTIONS`).
-- **`abstract resolve(name: T): string | undefined`** — Resolve a key to a font ligature name.
+- Inherits `register()` and `resolve()` from `TbxMatBaseIconService` — register domain keys mapped to font ligature names.
 
 ### `TBX_MAT_FONT_ICON_DEFAULT_FONT_SET`
 
