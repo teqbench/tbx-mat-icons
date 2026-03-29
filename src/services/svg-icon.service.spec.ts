@@ -17,14 +17,14 @@ const ICON_SVG: Record<TestIcon, string> = {
 
 @Injectable()
 class TestTbxMatSvgIconService extends TbxMatSvgIconService<TestIcon> {
-    constructor() {
-        super();
+    protected override initialize(): void {
+        super.initialize();
         for (const [name, svg] of Object.entries(ICON_SVG)) {
             this.register(name, svg);
         }
     }
 
-    // Expose register for direct testing.
+    /** Expose register for direct testing. */
     testRegister(name: string, svg: string): void {
         this.register(name, svg);
     }
@@ -84,13 +84,21 @@ describe('TbxMatSvgIconService', () => {
         expect(service.resolve('unknown')).toBeUndefined();
     });
 
-    it('should ignore duplicate registrations for the same name', () => {
+    it('should replace existing registration when re-registering the same name', () => {
         service = setup();
         const addSpy = vi.spyOn(MatIconRegistry.prototype, 'addSvgIconLiteral');
 
         service.testRegister('logo', '<svg>logo-v2</svg>');
 
-        expect(addSpy).not.toHaveBeenCalled();
+        expect(addSpy).toHaveBeenCalledWith('logo', expect.anything());
+        expect(addSpy).toHaveBeenCalledTimes(1);
         addSpy.mockRestore();
+    });
+
+    it('should still resolve the name after re-registration', () => {
+        service = setup();
+        service.testRegister('logo', '<svg>logo-v2</svg>');
+
+        expect(service.resolve(TestIcon.Logo)).toBe('logo');
     });
 });

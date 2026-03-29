@@ -23,8 +23,8 @@ import type { ITbxMatIconResolver } from '../contracts/icon-resolver.contract';
  *   so the base class stores `name → name` (identity mapping). The
  *   `TbxMatSvgIconService` override handles this automatically.
  *
- * Duplicate registrations for the same `name` are silently ignored —
- * only the first registration takes effect.
+ * Re-registering the same `name` replaces the previous value,
+ * allowing subclasses to override defaults set by a parent class.
  *
  * ### How resolution works
  *
@@ -47,8 +47,8 @@ import type { ITbxMatIconResolver } from '../contracts/icon-resolver.contract';
  *
  * @Injectable({ providedIn: 'root' })
  * export class SeverityIconService extends TbxMatFontIconService<Severity> {
- *     constructor() {
- *         super('material-symbols-rounded');
+ *     protected override initialize(): void {
+ *         super.initialize();
  *         this.register(Severity.Success, 'check_circle');
  *         this.register(Severity.Error, 'cancel');
  *     }
@@ -62,8 +62,8 @@ import type { ITbxMatIconResolver } from '../contracts/icon-resolver.contract';
  *
  * @Injectable({ providedIn: 'root' })
  * export class BrandIconService extends TbxMatSvgIconService<Brand> {
- *     constructor() {
- *         super();
+ *     protected override initialize(): void {
+ *         super.initialize();
  *         this.register(Brand.Logo, '<svg>…</svg>');
  *         this.register(Brand.Wordmark, '<svg>…</svg>');
  *     }
@@ -82,6 +82,33 @@ export abstract class TbxMatBaseIconService<
     private readonly registry = new Map<string, string>();
 
     /**
+     * Initialize the registry with default icon mappings.
+     *
+     * Must be called from the constructor of each concrete intermediate
+     * class ({@link TbxMatFontIconService}, {@link TbxMatSvgIconService})
+     * after their own dependencies are ready. Subclasses override this
+     * method to pre-populate the registry via `register()` calls. The
+     * base implementation calls `reset()` to clear any existing entries.
+     *
+     * Can be called again later to restore the subclass defaults after
+     * replacements have been made via `register()`.
+     */
+    protected initialize(): void {
+        this.reset();
+    }
+
+    /**
+     * Clear all registered icons from the registry.
+     *
+     * After calling `reset()`, `resolve()` returns `undefined` for all
+     * names until new icons are registered. Call `initialize()` instead
+     * to clear and re-register subclass defaults in one step.
+     */
+    protected reset(): void {
+        this.registry.clear();
+    }
+
+    /**
      * Register an icon name and its resolved value.
      *
      * The `name` is the lookup key used by `resolve()`. The `value` is
@@ -89,24 +116,16 @@ export abstract class TbxMatBaseIconService<
      * icon name itself for SVG icons (since `MatIconRegistry` stores the
      * actual SVG markup).
      *
-     * Duplicate registrations for the same `name` are silently ignored —
-     * the method returns `false` so overrides can skip their own side
-     * effects (e.g. `MatIconRegistry` calls in the SVG service).
+     * Re-registering the same `name` replaces the previous value,
+     * allowing subclasses to override defaults set by a parent class.
      *
      * @param name  - The icon key (typically an enum member)
      * @param value - The resolved identifier returned by `resolve()`
-     * @returns `true` if the name was newly registered, `false` if it
-     *          was already present
      */
-    protected register(name: TName, value: string): boolean;
-    protected register(name: string, value: string): boolean;
-    protected register(name: string, value: string): boolean {
-        if (this.registry.has(name)) {
-            return false;
-        }
-
+    protected register(name: TName, value: string): void;
+    protected register(name: string, value: string): void;
+    protected register(name: string, value: string): void {
         this.registry.set(name, value);
-        return true;
     }
 
     /**

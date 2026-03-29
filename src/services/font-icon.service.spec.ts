@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
 import { TbxMatFontIconService } from './font-icon.service';
-import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/notification-default-icon-font-set.token';
+import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-font-set.token';
 
 enum TestSeverity {
     Success = 'success',
@@ -15,14 +15,33 @@ const LIGATURES: Record<TestSeverity, string> = {
     [TestSeverity.Error]: 'cancel',
 };
 
-/** Subclass that passes fontSet explicitly via super(). */
+/** Subclass that passes fontSet explicitly via super(). Uses initialize() for registration. */
 @Injectable()
 class ExplicitFontSetService extends TbxMatFontIconService<TestSeverity> {
     constructor() {
         super('Material Symbols Rounded');
+    }
+
+    protected override initialize(): void {
+        super.initialize();
         for (const [name, ligature] of Object.entries(LIGATURES)) {
             this.register(name, ligature);
         }
+    }
+
+    /** Expose register for direct testing. */
+    testRegister(name: string, value: string): void {
+        this.register(name, value);
+    }
+
+    /** Expose initialize for direct testing. */
+    testInitialize(): void {
+        this.initialize();
+    }
+
+    /** Expose reset for direct testing. */
+    testReset(): void {
+        this.reset();
     }
 }
 
@@ -31,6 +50,10 @@ class ExplicitFontSetService extends TbxMatFontIconService<TestSeverity> {
 class DefaultFontSetService extends TbxMatFontIconService<TestSeverity> {
     constructor() {
         super();
+    }
+
+    protected override initialize(): void {
+        super.initialize();
         for (const [name, ligature] of Object.entries(LIGATURES)) {
             this.register(name, ligature);
         }
@@ -86,6 +109,31 @@ describe('TbxMatFontIconService', () => {
             });
             service = TestBed.inject(ExplicitFontSetService);
             expect(service.fontSet).toBe('Material Symbols Rounded');
+        });
+
+        it('should replace existing registration when re-registering the same name', () => {
+            service = setup();
+            service.testRegister('success', 'task_alt');
+
+            expect(service.resolve(TestSeverity.Success)).toBe('task_alt');
+        });
+
+        it('should clear all registrations on reset()', () => {
+            service = setup();
+            service.testReset();
+
+            expect(service.resolve(TestSeverity.Success)).toBeUndefined();
+            expect(service.resolve(TestSeverity.Error)).toBeUndefined();
+        });
+
+        it('should restore defaults on initialize()', () => {
+            service = setup();
+            service.testRegister('success', 'task_alt');
+            expect(service.resolve(TestSeverity.Success)).toBe('task_alt');
+
+            service.testInitialize();
+            expect(service.resolve(TestSeverity.Success)).toBe('check_circle');
+            expect(service.resolve(TestSeverity.Error)).toBe('cancel');
         });
 
         it('should prefer constructor fontSet over MAT_ICON_DEFAULT_OPTIONS', () => {

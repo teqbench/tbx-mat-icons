@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
 import { TbxMatBaseIconService } from './base-icon.service';
-import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/notification-default-icon-font-set.token';
+import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-font-set.token';
 
 /**
  * Abstract base class for font-based icon services.
@@ -164,5 +164,7 @@ export abstract class TbxMatFontIconService<
                         '(3) MAT_ICON_DEFAULT_OPTIONS with a fontSet property.'
                 );
             })();
+
+        this.initialize();
     }
 }

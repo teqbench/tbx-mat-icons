@@ -21,7 +21,7 @@ export type { ITbxMatIconResolver } from './contracts/icon-resolver.contract';
 export * from './contants/font-set.constants';
 
 // Tokens
-export { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from './tokens/notification-default-icon-font-set.token';
+export { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from './tokens/font-icon-default-font-set.token';
 
 // Abstract services
 export { TbxMatBaseIconService } from './services/base-icon.service';

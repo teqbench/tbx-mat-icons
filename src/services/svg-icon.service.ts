@@ -24,8 +24,8 @@ import { TbxMatBaseIconService } from './base-icon.service';
  * 2. Registers the SVG markup with `MatIconRegistry` via
  *    `addSvgIconLiteral()`, sanitized through `DomSanitizer`.
  *
- * Duplicate registrations for the same name are silently ignored by the
- * base class, so `MatIconRegistry` is only called once per name.
+ * Re-registering the same name replaces the previous entry in both the
+ * base class registry and `MatIconRegistry`.
  *
  * This is the SVG counterpart to {@link TbxMatFontIconService}. Font
  * services map domain keys to ligature names; SVG services register
@@ -66,8 +66,15 @@ import { TbxMatBaseIconService } from './base-icon.service';
 export abstract class TbxMatSvgIconService<
     TName extends string = string,
 > extends TbxMatBaseIconService<TName> {
-    private readonly iconRegistry = inject(MatIconRegistry);
-    private readonly sanitizer = inject(DomSanitizer);
+    private readonly iconRegistry: MatIconRegistry;
+    private readonly sanitizer: DomSanitizer;
+
+    constructor() {
+        super();
+        this.iconRegistry = inject(MatIconRegistry);
+        this.sanitizer = inject(DomSanitizer);
+        this.initialize();
+    }
 
     /**
      * Register an inline SVG icon with the Material icon registry.
@@ -82,25 +89,16 @@ export abstract class TbxMatSvgIconService<
      * itself is stored externally by `MatIconRegistry`, not in the base
      * class registry.
      *
-     * Duplicate registrations for the same name are silently ignored —
-     * only the first registration takes effect.
+     * Re-registering the same name replaces the previous entry in both
+     * the base class registry and `MatIconRegistry`.
      *
      * @param name - The icon name used in `[svgIcon]="name"`
      * @param svg  - The inline SVG markup string
-     * @returns `true` if the name was newly registered, `false` if it
-     *          was already present
      */
-    protected override register(name: TName, svg: string): boolean;
-    protected override register(name: string, svg: string): boolean;
-    protected override register(name: string, svg: string): boolean {
-        // The base class stores name → value for resolve(). For SVG icons,
-        // the resolved value is the icon name itself (used in [svgIcon]="name"),
-        // not the SVG markup — MatIconRegistry stores the markup separately.
-        if (!super.register(name, name)) {
-            return false;
-        }
-
+    protected override register(name: TName, svg: string): void;
+    protected override register(name: string, svg: string): void;
+    protected override register(name: string, svg: string): void {
+        super.register(name, name);
         this.iconRegistry.addSvgIconLiteral(name, this.sanitizer.bypassSecurityTrustHtml(svg));
-        return true;
     }
 }
