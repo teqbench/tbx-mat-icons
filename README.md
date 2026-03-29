@@ -268,12 +268,13 @@ Abstract base class for font-based icon services. Extends `TbxMatBaseIconService
 
 ## Compatibility
 
-| Dependency       | Version  |
-| ---------------- | -------- |
-| Angular          | ^21.0.0  |
-| Angular Material | ^21.0.0  |
-| TypeScript       | ~5.9.0   |
-| Node.js          | >=24.0.0 |
+| Dependency               | Version  |
+| ------------------------ | -------- |
+| Angular                  | ^21.0.0  |
+| Angular Material         | ^21.0.0  |
+| Angular Platform Browser | ^21.0.0  |
+| TypeScript               | ~5.9.0   |
+| Node.js                  | >=24.0.0 |
 
 ## License
 
