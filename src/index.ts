@@ -3,6 +3,7 @@
  *
  * Public API:
  *   - ITbxMatIconResolver             — generic resolve contract implemented by TbxMatBaseIconService
+ *   - TbxMatIconType                  — enum discriminant for font vs SVG rendering strategy
  *   - TbxMatBaseIconService           — shared registration/resolution base (do not extend directly)
  *   - TbxMatSvgIconService            — abstract base for SVG icon registration via MatIconRegistry
  *   - TbxMatFontIconService           — abstract base for font-based icon ligature resolution
@@ -16,6 +17,9 @@
 
 // Contracts
 export type { ITbxMatIconResolver } from './contracts/icon-resolver.contract';
+
+// Types
+export { TbxMatIconType } from './types/icon-type.type';
 
 // Constants
 export * from './constants/font-set.constants';

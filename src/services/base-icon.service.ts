@@ -1,4 +1,5 @@
 import type { ITbxMatIconResolver } from '../contracts/icon-resolver.contract';
+import { type TbxMatIconType } from '../types/icon-type.type';
 
 /**
  * Abstract base class for all icon services.
@@ -78,6 +79,13 @@ import type { ITbxMatIconResolver } from '../contracts/icon-resolver.contract';
 export abstract class TbxMatBaseIconService<
     TName extends string = string,
 > implements ITbxMatIconResolver<TName> {
+    /**
+     * Discriminant indicating whether this service resolves font or SVG icons.
+     * Set by each intermediate class. Consumers use this to determine the
+     * correct `<mat-icon>` binding — font ligature text content vs `[svgIcon]`.
+     */
+    abstract readonly iconType: TbxMatIconType;
+
     /** Internal name → value store. See class-level docs for semantics. */
     private readonly registry = new Map<string, string>();
 

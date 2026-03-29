@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { Injectable } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { TbxMatSvgIconService } from './svg-icon.service';
+import { TbxMatIconType } from '../types/icon-type.type';
 
 // Concrete test subclass to exercise protected register() and inherited resolve().
 enum TestIcon {
@@ -40,6 +41,11 @@ describe('TbxMatSvgIconService', () => {
 
         return TestBed.inject(TestTbxMatSvgIconService);
     }
+
+    it('should have iconType "svg"', () => {
+        service = setup();
+        expect(service.iconType).toBe(TbxMatIconType.Svg);
+    });
 
     it('should be injectable', () => {
         service = setup();

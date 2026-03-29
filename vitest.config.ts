@@ -12,6 +12,8 @@ export default defineConfig({
             exclude: [
                 // Constants
                 'src/constants/font-set.constants.ts',
+                // Types (enums — no testable logic)
+                'src/types/icon-type.type.ts',
                 // Tokens (InjectionToken declarations — no testable logic)
                 'src/tokens/font-icon-default-font-set.token.ts',
             ],

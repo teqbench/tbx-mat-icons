@@ -219,6 +219,13 @@ export class StatusComponent {
 
 ## API Reference
 
+### `TbxMatIconType`
+
+Enum discriminant for the icon rendering strategy. Used by consumers to determine the correct `<mat-icon>` binding.
+
+- **`TbxMatIconType.Font`** (`'font'`) — render as font ligature text content
+- **`TbxMatIconType.Svg`** (`'svg'`) — render via `[svgIcon]` binding
+
 ### `ITbxMatIconResolver<T extends string = string>`
 
 Contract for resolving icon keys to usable icon identifiers. Implemented by `TbxMatBaseIconService` and inherited by both service subclasses.
@@ -229,6 +236,7 @@ Contract for resolving icon keys to usable icon identifiers. Implemented by `Tbx
 
 Abstract base class providing shared registration and resolution mechanics. Do not extend directly — use `TbxMatSvgIconService` or `TbxMatFontIconService`.
 
+- **`abstract readonly iconType: TbxMatIconType`** — Discriminant set by each intermediate class (`Font` or `Svg`). Consumers use this to determine the correct `<mat-icon>` binding.
 - **`protected initialize(): void`** — Initialize the registry with default icon mappings. Called from the constructor of each intermediate class. Subclasses override to register defaults via `register()`. Call again later to restore defaults after replacements.
 - **`protected reset(): void`** — Clear all registered icons from the registry.
 - **`protected register(name: T, value: string): void`** — Register an icon name and its resolved value. Re-registering the same name replaces the previous value, allowing subclasses to override parent defaults.
@@ -236,14 +244,14 @@ Abstract base class providing shared registration and resolution mechanics. Do n
 
 ### `TbxMatSvgIconService<T extends string = string>`
 
-Abstract base class for SVG-based icon services. Extends `TbxMatBaseIconService` with `MatIconRegistry` + `DomSanitizer` integration.
+Abstract base class for SVG-based icon services. Extends `TbxMatBaseIconService` with `MatIconRegistry` + `DomSanitizer` integration. Sets `iconType` to `TbxMatIconType.Svg`.
 
 - **`protected register(name: T, svg: string): void`** — Register inline SVG markup with the Material icon registry. The base class stores `name → name` (identity mapping); the SVG markup is stored by `MatIconRegistry`. Re-registering replaces both entries.
 - Inherits `resolve()` from `TbxMatBaseIconService` — returns the icon name for use in `[svgIcon]="name"`.
 
 ### `TbxMatFontIconService<T extends string = string>`
 
-Abstract base class for font-based icon services. Extends `TbxMatBaseIconService` with fontSet resolution.
+Abstract base class for font-based icon services. Extends `TbxMatBaseIconService` with fontSet resolution. Sets `iconType` to `TbxMatIconType.Font`.
 
 - **`readonly fontSet: string`** — The fontSet this service resolves against (set via constructor, `TBX_MAT_FONT_ICON_DEFAULT_FONT_SET` token, or `MAT_ICON_DEFAULT_OPTIONS`).
 - Inherits `register()` and `resolve()` from `TbxMatBaseIconService` — register domain keys mapped to font ligature names.

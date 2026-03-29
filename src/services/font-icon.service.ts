@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
 import { TbxMatBaseIconService } from './base-icon.service';
+import { TbxMatIconType } from '../types/icon-type.type';
 import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-font-set.token';
 
 /**
@@ -143,6 +144,8 @@ import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-
 export abstract class TbxMatFontIconService<
     TName extends string = string,
 > extends TbxMatBaseIconService<TName> {
+    readonly iconType = TbxMatIconType.Font;
+
     /** The fontSet this service resolves against. */
     readonly fontSet: string;
 

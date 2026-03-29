@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TbxMatBaseIconService } from './base-icon.service';
+import { TbxMatIconType } from '../types/icon-type.type';
 
 /**
  * Abstract base class for SVG-based icon services.
@@ -66,6 +67,8 @@ import { TbxMatBaseIconService } from './base-icon.service';
 export abstract class TbxMatSvgIconService<
     TName extends string = string,
 > extends TbxMatBaseIconService<TName> {
+    readonly iconType = TbxMatIconType.Svg;
+
     private readonly iconRegistry: MatIconRegistry;
     private readonly sanitizer: DomSanitizer;
 
