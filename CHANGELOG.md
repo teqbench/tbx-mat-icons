@@ -1,5 +1,29 @@
 # Changelog
 
+## [4.0.0](https://github.com/teqbench/tbx-mat-icons/compare/v3.0.0...v4.0.0) (2026-03-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* TbxMatBaseIconService now requires subclasses to implement abstract readonly iconType: TbxMatIconType.
+* add initialize/reset lifecycle, replace-on-register, rename token
+* TbxMatSvgIconService and TbxMatFontIconService now extend TbxMatBaseIconService. resolve() is no longer abstract — it is inherited from the base class. Subclasses that override resolve() must be updated to use register() in the constructor instead.
+
+### Features
+
+* add TbxMatIconType enum and dedicated base service tests ([574badd](https://github.com/teqbench/tbx-mat-icons/commit/574badd06d5999b60f17ef09a1e3d50863fdcae7))
+
+
+### Bug Fixes
+
+* rename contants directory to constants ([17292b8](https://github.com/teqbench/tbx-mat-icons/commit/17292b82a734f04860197b7869677cc56348ed18))
+
+
+### Code Refactoring
+
+* add initialize/reset lifecycle, replace-on-register, rename token ([01e4c6b](https://github.com/teqbench/tbx-mat-icons/commit/01e4c6b6bb4babe07b9bd1e7539b351fa855dd8a))
+* extract TbxMatBaseIconService with shared register/resolve ([3d21511](https://github.com/teqbench/tbx-mat-icons/commit/3d215112df9feefebce0e14ce9c77ea42fac98c0))
+
 ## [3.0.0](https://github.com/teqbench/tbx-mat-icons/compare/v2.0.0...v3.0.0) (2026-03-28)
 
 
