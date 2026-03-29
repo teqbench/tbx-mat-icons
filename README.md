@@ -2,7 +2,7 @@
 
 ![Build Status](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-build-status.json) ![Tests](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-tests.json) ![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-coverage.json) ![Version](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-version.json) ![Build Number](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-build-number.json)
 
-> Abstract icon service contracts for Angular Material projects. Provides `TbxMatBaseIconService` as the shared registration/resolution base, `TbxMatSvgIconService` for inline SVG registration via `MatIconRegistry`, and `TbxMatFontIconService` for font ligature resolution. All are generic abstract classes — concrete implementations register domain keys and their resolved values in the constructor.
+> Abstract icon service contracts for Angular Material projects. Provides `TbxMatBaseIconService` as the shared registration/resolution base, `TbxMatSvgIconService` for inline SVG registration via `MatIconRegistry`, and `TbxMatFontIconService` for font ligature resolution. All are generic abstract classes — concrete implementations override `initialize()` to register domain keys and their resolved values.
 
 ## Installation
 
@@ -38,8 +38,8 @@ const BRAND_SVG: Record<BrandIcon, string> = {
 
 @Injectable({ providedIn: 'root' })
 export class BrandSvgIconService extends TbxMatSvgIconService<BrandIcon> {
-    constructor() {
-        super();
+    protected override initialize(): void {
+        super.initialize();
         for (const [name, svg] of Object.entries(BRAND_SVG)) {
             this.register(name, svg);
         }
@@ -99,6 +99,10 @@ const LIGATURES: Record<Severity, string> = {
 export class SharpIconService extends TbxMatFontIconService<Severity> {
     constructor() {
         super(TBX_MAT_ICON_FONT_SET_MATERIAL_SYMBOLS_SHARP);
+    }
+
+    protected override initialize(): void {
+        super.initialize();
         for (const [name, ligature] of Object.entries(LIGATURES)) {
             this.register(name, ligature);
         }
@@ -143,8 +147,8 @@ providers: [{ provide: TBX_MAT_FONT_ICON_DEFAULT_FONT_SET, useValue: TBX_MAT_ICO
 ```typescript
 @Injectable({ providedIn: 'root' })
 export class MySeverityIconService extends TbxMatFontIconService<Severity> {
-    constructor() {
-        super(); // inherits TBX_MAT_FONT_ICON_DEFAULT_FONT_SET
+    protected override initialize(): void {
+        super.initialize();
         for (const [name, ligature] of Object.entries(LIGATURES)) {
             this.register(name, ligature);
         }
@@ -185,8 +189,8 @@ providers: [{ provide: MAT_ICON_DEFAULT_OPTIONS, useValue: { fontSet: 'material-
 ```typescript
 @Injectable({ providedIn: 'root' })
 export class MySeverityIconService extends TbxMatFontIconService<Severity> {
-    constructor() {
-        super(); // inherits MAT_ICON_DEFAULT_OPTIONS.fontSet
+    protected override initialize(): void {
+        super.initialize();
         for (const [name, ligature] of Object.entries(LIGATURES)) {
             this.register(name, ligature);
         }
@@ -225,14 +229,16 @@ Contract for resolving icon keys to usable icon identifiers. Implemented by `Tbx
 
 Abstract base class providing shared registration and resolution mechanics. Do not extend directly — use `TbxMatSvgIconService` or `TbxMatFontIconService`.
 
-- **`protected register(name: T, value: string): boolean`** — Register an icon name and its resolved value. Returns `true` if newly registered, `false` if already present (duplicate ignored).
+- **`protected initialize(): void`** — Initialize the registry with default icon mappings. Called from the constructor of each intermediate class. Subclasses override to register defaults via `register()`. Call again later to restore defaults after replacements.
+- **`protected reset(): void`** — Clear all registered icons from the registry.
+- **`protected register(name: T, value: string): void`** — Register an icon name and its resolved value. Re-registering the same name replaces the previous value, allowing subclasses to override parent defaults.
 - **`resolve(name: T): string | undefined`** — Look up the value registered for the given name.
 
 ### `TbxMatSvgIconService<T extends string = string>`
 
 Abstract base class for SVG-based icon services. Extends `TbxMatBaseIconService` with `MatIconRegistry` + `DomSanitizer` integration.
 
-- **`protected register(name: T, svg: string): boolean`** — Register inline SVG markup with the Material icon registry. The base class stores `name → name` (identity mapping); the SVG markup is stored by `MatIconRegistry`.
+- **`protected register(name: T, svg: string): void`** — Register inline SVG markup with the Material icon registry. The base class stores `name → name` (identity mapping); the SVG markup is stored by `MatIconRegistry`. Re-registering replaces both entries.
 - Inherits `resolve()` from `TbxMatBaseIconService` — returns the icon name for use in `[svgIcon]="name"`.
 
 ### `TbxMatFontIconService<T extends string = string>`

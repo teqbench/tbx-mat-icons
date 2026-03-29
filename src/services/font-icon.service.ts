@@ -78,6 +78,10 @@ import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-
  * export class SharpIconService extends TbxMatFontIconService<Severity> {
  *     constructor() {
  *         super(TBX_MAT_ICON_FONT_SET_MATERIAL_SYMBOLS_SHARP);
+ *     }
+ *
+ *     protected override initialize(): void {
+ *         super.initialize();
  *         this.register(Severity.Success, 'check_circle');
  *         this.register(Severity.Error, 'cancel');
  *     }
@@ -99,8 +103,8 @@ import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-
  *
  * @Injectable({ providedIn: 'root' })
  * export class MySeverityIconService extends TbxMatFontIconService<Severity> {
- *     constructor() {
- *         super(); // inherits TBX_MAT_FONT_ICON_DEFAULT_FONT_SET
+ *     protected override initialize(): void {
+ *         super.initialize();
  *         this.register(Severity.Success, 'check_circle');
  *         this.register(Severity.Error, 'cancel');
  *     }
@@ -120,8 +124,8 @@ import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-
  *
  * @Injectable({ providedIn: 'root' })
  * export class MySeverityIconService extends TbxMatFontIconService<Severity> {
- *     constructor() {
- *         super(); // inherits MAT_ICON_DEFAULT_OPTIONS.fontSet
+ *     protected override initialize(): void {
+ *         super.initialize();
  *         this.register(Severity.Success, 'check_circle');
  *         this.register(Severity.Error, 'cancel');
  *     }

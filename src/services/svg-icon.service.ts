@@ -45,8 +45,8 @@ import { TbxMatBaseIconService } from './base-icon.service';
  *
  * @Injectable({ providedIn: 'root' })
  * export class BrandSvgIconService extends TbxMatSvgIconService<BrandIcon> {
- *     constructor() {
- *         super();
+ *     protected override initialize(): void {
+ *         super.initialize();
  *         for (const [name, svg] of Object.entries(BRAND_SVG)) {
  *             this.register(name, svg);
  *         }
