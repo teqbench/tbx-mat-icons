@@ -11,7 +11,7 @@
  *   - TBX_MAT_ICON_FONT_SET_*         — fontSet string constants for Material Symbols variants
  *
  * All service classes are generic — narrow the type parameter to an enum or
- * union for typed icon keys. Subclasses register icons in their constructor
+ * union for typed icon keys. Subclasses override initialize() to register icons
  * and inherit resolve() from the base class.
  */
 
