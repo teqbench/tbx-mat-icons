@@ -18,7 +18,7 @@
 export type { ITbxMatIconResolver } from './contracts/icon-resolver.contract';
 
 // Constants
-export * from './contants/font-set.constants';
+export * from './constants/font-set.constants';
 
 // Tokens
 export { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from './tokens/font-icon-default-font-set.token';
