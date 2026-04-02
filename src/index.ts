@@ -10,11 +10,11 @@
  *
  * Primary exports:
  *
- * - {@link ITbxMatIconResolver} — generic resolve contract implemented by {@link TbxMatBaseIconService}
+ * - {@link TbxMatIconResolver} — generic resolve contract implemented by {@link TbxMatIconService}
  *
  * - {@link TbxMatIconType} — enum discriminant for font vs SVG rendering strategy
  *
- * - {@link TbxMatBaseIconService} — shared registration/resolution base (do not extend directly)
+ * - {@link TbxMatIconService} — shared registration/resolution base (do not extend directly)
  *
  * - {@link TbxMatSvgIconService} — abstract base for SVG icon registration via `MatIconRegistry`
  *
@@ -30,7 +30,7 @@
  */
 
 // Contracts
-export type { ITbxMatIconResolver } from './contracts/icon-resolver.contract';
+export type { TbxMatIconResolver } from './contracts/icon-resolver.contract';
 
 // Types
 export { TbxMatIconType } from './types/icon-type.type';
@@ -42,6 +42,6 @@ export * from './constants/font-set.constants';
 export { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from './tokens/font-icon-default-font-set.token';
 
 // Abstract services
-export { TbxMatBaseIconService } from './services/base-icon.service';
+export { TbxMatIconService } from './services/base-icon.service';
 export { TbxMatSvgIconService } from './services/svg-icon.service';
 export { TbxMatFontIconService } from './services/font-icon.service';

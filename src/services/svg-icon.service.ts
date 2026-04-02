@@ -1,14 +1,14 @@
 import { inject } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { TbxMatBaseIconService } from './base-icon.service';
+import { TbxMatIconService } from './base-icon.service';
 import { TbxMatIconType } from '../types/icon-type.type';
 
 /**
  * Abstract base class for SVG-based icon services
  *
  * @remarks
- * Extends {@link TbxMatBaseIconService} with Angular Material's
+ * Extends {@link TbxMatIconService} with Angular Material's
  * `MatIconRegistry` and `DomSanitizer` integration. Subclasses call the
  * protected `register()` method with a name and SVG markup string —
  * they never interact with `MatIconRegistry` or `DomSanitizer` directly.
@@ -75,15 +75,15 @@ import { TbxMatIconType } from '../types/icon-type.type';
  * @displayName SVG Icon Service
  * @order 3
  * @since 1.0.0
- * @related TbxMatBaseIconService
+ * @related TbxMatIconService
  * @related TbxMatFontIconService
- * @related ITbxMatIconResolver
+ * @related TbxMatIconResolver
  *
  * @public
  */
 export abstract class TbxMatSvgIconService<
     TName extends string = string,
-> extends TbxMatBaseIconService<TName> {
+> extends TbxMatIconService<TName> {
     readonly iconType = TbxMatIconType.Svg;
 
     private readonly iconRegistry: MatIconRegistry;

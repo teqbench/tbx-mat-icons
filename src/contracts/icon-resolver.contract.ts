@@ -11,19 +11,19 @@
  * @usage
  * Use this interface to type service references when the consumer does not
  * need to know whether icons are font-based or SVG-based. Inject the concrete
- * service and type the reference as `ITbxMatIconResolver<MyEnum>`.
+ * service and type the reference as `TbxMatIconResolver<MyEnum>`.
  *
  * @category Contracts
  * @displayName Icon Resolver Contract
  * @order 1
  * @since 2.0.0
- * @related TbxMatBaseIconService
+ * @related TbxMatIconService
  * @related TbxMatFontIconService
  * @related TbxMatSvgIconService
  *
  * @public
  */
-export interface ITbxMatIconResolver<T extends string = string> {
+export interface TbxMatIconResolver<T extends string = string> {
     /**
      * Resolve an icon key to an icon identifier
      *

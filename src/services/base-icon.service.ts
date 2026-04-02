@@ -1,4 +1,4 @@
-import type { ITbxMatIconResolver } from '../contracts/icon-resolver.contract';
+import type { TbxMatIconResolver } from '../contracts/icon-resolver.contract';
 import { type TbxMatIconType } from '../types/icon-type.type';
 
 /**
@@ -85,16 +85,16 @@ import { type TbxMatIconType } from '../types/icon-type.type';
  * @displayName Base Icon Service
  * @order 1
  * @since 4.0.0
- * @related ITbxMatIconResolver
+ * @related TbxMatIconResolver
  * @related TbxMatFontIconService
  * @related TbxMatSvgIconService
  * @related TbxMatIconType
  *
  * @public
  */
-export abstract class TbxMatBaseIconService<
+export abstract class TbxMatIconService<
     TName extends string = string,
-> implements ITbxMatIconResolver<TName> {
+> implements TbxMatIconResolver<TName> {
     /**
      * Discriminant indicating whether this service resolves font or SVG icons
      *

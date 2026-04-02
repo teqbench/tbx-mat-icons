@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
-import { TbxMatBaseIconService } from './base-icon.service';
+import { TbxMatIconService } from './base-icon.service';
 import { TbxMatIconType } from '../types/icon-type.type';
 import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-font-set.token';
 
@@ -8,7 +8,7 @@ import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-
  * Abstract base class for font-based icon services
  *
  * @remarks
- * Extends {@link TbxMatBaseIconService} with `fontSet` resolution for
+ * Extends {@link TbxMatIconService} with `fontSet` resolution for
  * Angular Material font icon rendering. Subclasses register domain keys
  * mapped to font ligature names via `register()` — `resolve()` is
  * inherited from the base class and returns the ligature for a given key.
@@ -143,16 +143,16 @@ import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-
  * @displayName Font Icon Service
  * @order 2
  * @since 1.0.0
- * @related TbxMatBaseIconService
+ * @related TbxMatIconService
  * @related TbxMatSvgIconService
  * @related TBX_MAT_FONT_ICON_DEFAULT_FONT_SET
- * @related ITbxMatIconResolver
+ * @related TbxMatIconResolver
  *
  * @public
  */
 export abstract class TbxMatFontIconService<
     TName extends string = string,
-> extends TbxMatBaseIconService<TName> {
+> extends TbxMatIconService<TName> {
     readonly iconType = TbxMatIconType.Font;
 
     /**

@@ -18,7 +18,7 @@
  * @displayName Icon Type
  * @order 2
  * @since 4.0.0
- * @related TbxMatBaseIconService
+ * @related TbxMatIconService
  *
  * @public
  */

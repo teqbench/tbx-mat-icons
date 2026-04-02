@@ -2,7 +2,7 @@
 
 ![Build Status](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-build-status.json) ![Tests](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-tests.json) ![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-coverage.json) ![Version](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-version.json) ![Build Number](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-build-number.json)
 
-> Abstract icon service contracts for Angular Material projects. Provides `TbxMatBaseIconService` as the shared registration/resolution base, `TbxMatSvgIconService` for inline SVG registration via `MatIconRegistry`, and `TbxMatFontIconService` for font ligature resolution. All are generic abstract classes — concrete implementations override `initialize()` to register domain keys and their resolved values.
+> Abstract icon service contracts for Angular Material projects. Provides `TbxMatIconService` as the shared registration/resolution base, `TbxMatSvgIconService` for inline SVG registration via `MatIconRegistry`, and `TbxMatFontIconService` for font ligature resolution. All are generic abstract classes — concrete implementations override `initialize()` to register domain keys and their resolved values.
 
 ## Installation
 
@@ -226,13 +226,13 @@ Enum discriminant for the icon rendering strategy. Used by consumers to determin
 - **`TbxMatIconType.Font`** (`'font'`) — render as font ligature text content
 - **`TbxMatIconType.Svg`** (`'svg'`) — render via `[svgIcon]` binding
 
-### `ITbxMatIconResolver<T extends string = string>`
+### `TbxMatIconResolver<T extends string = string>`
 
-Contract for resolving icon keys to usable icon identifiers. Implemented by `TbxMatBaseIconService` and inherited by both service subclasses.
+Contract for resolving icon keys to usable icon identifiers. Implemented by `TbxMatIconService` and inherited by both service subclasses.
 
 - **`resolve(name: T): string | undefined`** — Resolve an icon key to an icon identifier (font ligature name or registered svgIcon name). Returns `undefined` if the key is not recognized.
 
-### `TbxMatBaseIconService<T extends string = string>`
+### `TbxMatIconService<T extends string = string>`
 
 Abstract base class providing shared registration and resolution mechanics. Do not extend directly — use `TbxMatSvgIconService` or `TbxMatFontIconService`.
 
@@ -244,17 +244,17 @@ Abstract base class providing shared registration and resolution mechanics. Do n
 
 ### `TbxMatSvgIconService<T extends string = string>`
 
-Abstract base class for SVG-based icon services. Extends `TbxMatBaseIconService` with `MatIconRegistry` + `DomSanitizer` integration. Sets `iconType` to `TbxMatIconType.Svg`.
+Abstract base class for SVG-based icon services. Extends `TbxMatIconService` with `MatIconRegistry` + `DomSanitizer` integration. Sets `iconType` to `TbxMatIconType.Svg`.
 
 - **`protected register(name: T, svg: string): void`** — Register inline SVG markup with the Material icon registry. The base class stores `name → name` (identity mapping); the SVG markup is stored by `MatIconRegistry`. Re-registering replaces both entries.
-- Inherits `resolve()` from `TbxMatBaseIconService` — returns the icon name for use in `[svgIcon]="name"`.
+- Inherits `resolve()` from `TbxMatIconService` — returns the icon name for use in `[svgIcon]="name"`.
 
 ### `TbxMatFontIconService<T extends string = string>`
 
-Abstract base class for font-based icon services. Extends `TbxMatBaseIconService` with fontSet resolution. Sets `iconType` to `TbxMatIconType.Font`.
+Abstract base class for font-based icon services. Extends `TbxMatIconService` with fontSet resolution. Sets `iconType` to `TbxMatIconType.Font`.
 
 - **`readonly fontSet: string`** — The fontSet this service resolves against (set via constructor, `TBX_MAT_FONT_ICON_DEFAULT_FONT_SET` token, or `MAT_ICON_DEFAULT_OPTIONS`).
-- Inherits `register()` and `resolve()` from `TbxMatBaseIconService` — register domain keys mapped to font ligature names.
+- Inherits `register()` and `resolve()` from `TbxMatIconService` — register domain keys mapped to font ligature names.
 
 ### `TBX_MAT_FONT_ICON_DEFAULT_FONT_SET`
 
