@@ -1,13 +1,19 @@
 import { InjectionToken } from '@angular/core';
 
 /**
- * Injection token for setting a default fontSet at the application level.
+ * Injection token for setting a default fontSet at the application level
  *
+ * @remarks
  * When provided (typically in the root `ApplicationConfig`), any
- * `TbxMatFontIconService` subclass that does not pass a `fontSet` to `super()`
- * will use this value automatically.
+ * {@link TbxMatFontIconService} subclass that does not pass a `fontSet` to
+ * `super()` will use this value automatically.
  *
- * @example Providing a default fontSet for the entire application:
+ * @usage
+ * Provide this token once in `app.config.ts` to set a consistent font set
+ * across all font icon services in the application. Individual services can
+ * still override by passing a `fontSet` argument to `super()`.
+ *
+ * @example
  * ```typescript
  * // app.config.ts
  * import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET, TBX_MAT_ICON_FONT_SET_MATERIAL_SYMBOLS_ROUNDED }
@@ -19,6 +25,15 @@ import { InjectionToken } from '@angular/core';
  *     ],
  * };
  * ```
+ *
+ * @category Tokens
+ * @displayName Default Font Set Token
+ * @order 1
+ * @since 1.0.0
+ * @related TbxMatFontIconService
+ * @related TBX_MAT_ICON_FONT_SET_MATERIAL_SYMBOLS_ROUNDED
+ *
+ * @public
  */
 export const TBX_MAT_FONT_ICON_DEFAULT_FONT_SET = new InjectionToken<string>(
     'TBX_MAT_FONT_ICON_DEFAULT_FONT_SET'

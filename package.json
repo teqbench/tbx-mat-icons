@@ -3,6 +3,10 @@
   "version": "4.0.0",
   "description": "Abstract icon service contracts for Angular Material. Provides TbxMatBaseIconService as the shared registration/resolution base, TbxMatSvgIconService for inline SVG registration via MatIconRegistry, and TbxMatFontIconService for font ligature resolution. All are generic abstract classes — concrete implementations override initialize() to register domain keys.",
   "type": "module",
+  "keywords": [
+    "angular",
+    "material"
+  ],
   "license": "Apache-2.0",
   "engines": {
     "node": ">=24.0.0"
@@ -47,6 +51,7 @@
     "@vitest/coverage-v8": "^4.1.1",
     "angular-eslint": "^21.3.1",
     "eslint": "^9.39.2",
+    "eslint-plugin-tsdoc": "^0.5.2",
     "husky": "^9.1.7",
     "jsdom": "^26.1.0",
     "lint-staged": "^16.3.3",
