@@ -4,29 +4,29 @@ This file provides guidance for Claude Code when working in this repository.
 
 ## Package Overview
 
-Abstract icon service contracts for Angular Material. Provides `TbxMatBaseIconService` as the shared registration/resolution base with `initialize()`/`reset()` lifecycle hooks, `TbxMatSvgIconService` for inline SVG registration via `MatIconRegistry`, and `TbxMatFontIconService` for font ligature resolution. All are generic abstract classes — concrete implementations override `initialize()` to register domain keys.
+Abstract icon service contracts for [Angular Material ↗](https://material.angular.io). Provides `TbxMatIconService` as the shared registration/resolution base with `initialize()`/`reset()` lifecycle hooks, `TbxMatSvgIconService` for inline SVG registration via `MatIconRegistry`, and `TbxMatFontIconService` for font ligature resolution. All are generic abstract classes — concrete implementations override `initialize()` to register domain keys.
 
-This is a `@teqbench` Angular library package (`tbx-mat-*`) built with TypeScript and ng-packagr.
+This is a `@teqbench` [Angular ↗](https://angular.dev) library package (`tbx-mat-*`) built with [TypeScript ↗](https://www.typescriptlang.org) and [ng-packagr ↗](https://github.com/ng-packagr/ng-packagr).
 
 ## Tech Stack
 
-- **Language:** TypeScript 5.9+ (strict mode, ES2022 target, bundler module resolution)
-- **Testing:** Vitest (globals enabled)
-- **Linting:** ESLint flat config with typescript-eslint
-- **Formatting:** Prettier (enforced via pre-commit hook and CI)
-- **Git Hooks:** Husky + lint-staged
-- **Versioning:** Release Please (Conventional Commits)
-- **Registry:** GitHub Packages (`@teqbench` scope)
+- **Language:** [TypeScript ↗](https://www.typescriptlang.org) 5.9+ (strict mode, [ES2022 ↗](https://262.ecma-international.org/13.0/) target, bundler module resolution)
+- **Testing:** [Vitest ↗](https://vitest.dev) (globals enabled)
+- **Linting:** [ESLint ↗](https://eslint.org) flat config with [typescript-eslint ↗](https://typescript-eslint.io)
+- **Formatting:** [Prettier ↗](https://prettier.io) (enforced via pre-commit hook and CI)
+- **Git Hooks:** [Husky ↗](https://typicode.github.io/husky/) + [lint-staged ↗](https://github.com/lint-staged/lint-staged)
+- **Versioning:** [Release Please ↗](https://github.com/googleapis/release-please) ([Conventional Commits ↗](https://www.conventionalcommits.org))
+- **Registry:** [GitHub Packages ↗](https://github.com/orgs/teqbench/packages) (`@teqbench` scope)
 
 ## Key Commands
 
 - `npm ci` — Install dependencies (use this, not `npm install`)
-- `npm run build` — Compile TypeScript to `dist/`
-- `npm test` — Run tests with Vitest
+- `npm run build` — Compile [TypeScript ↗](https://www.typescriptlang.org) to `dist/`
+- `npm test` — Run tests with [Vitest ↗](https://vitest.dev)
 - `npm run test:coverage` — Run tests with coverage enforcement (used in CI)
-- `npm run typecheck` — Full TypeScript type-check (`tsc --noEmit`)
-- `npm run lint` — Run ESLint
-- `npm run format` — Format all files with Prettier
+- `npm run typecheck` — Full [TypeScript ↗](https://www.typescriptlang.org) type-check (`tsc --noEmit`)
+- `npm run lint` — Run [ESLint ↗](https://eslint.org)
+- `npm run format` — Format all files with [Prettier ↗](https://prettier.io)
 - `npm run format:check` — Check formatting (CI mode)
 
 ## Project Structure
@@ -39,13 +39,108 @@ This is a `@teqbench` Angular library package (`tbx-mat-*`) built with TypeScrip
 
 ## Publishing
 
-- Packages are published to GitHub Packages (`@teqbench` scope) via the release workflow.
+- Packages are published to [GitHub Packages ↗](https://github.com/orgs/teqbench/packages) (`@teqbench` scope) via the release workflow.
 - Coverage thresholds are enforced in CI: 80% lines/functions/statements, 75% branches, per file.
-- **Build tooling:** ng-packagr is used to build Angular Package Format (APF) output. It uses bundler module resolution internally, so source files use extensionless relative imports (e.g., `'./foo.service'`). The `ng-package.json` at the repo root configures the entry point and output directory. ng-packagr generates its own `package.json` inside `dist/` with the correct APF entry points (`fesm2022/`, etc.). The release workflow publishes from `dist/` directly (`npm publish ./dist`), so consumers resolve against ng-packagr's generated `package.json`. The root `package.json` does not need `main`, `types`, or `exports` fields.
+- **Build tooling:** [ng-packagr ↗](https://github.com/ng-packagr/ng-packagr) is used to build [Angular Package Format (APF) ↗](https://angular.dev/tools/libraries/angular-package-format) output. It uses bundler module resolution internally, so source files use extensionless relative imports (e.g., `'./foo.service'`). The `ng-package.json` at the repo root configures the entry point and output directory. [ng-packagr ↗](https://github.com/ng-packagr/ng-packagr) generates its own `package.json` inside `dist/` with the correct APF entry points (`fesm2022/`, etc.). The release workflow publishes from `dist/` directly (`npm publish ./dist`), so consumers resolve against [ng-packagr ↗](https://github.com/ng-packagr/ng-packagr)'s generated `package.json`. The root `package.json` does not need `main`, `types`, or `exports` fields.
+
+## TSDoc Convention
+
+All exported [TypeScript ↗](https://www.typescriptlang.org) declarations must have [TSDoc ↗](https://tsdoc.org) comments validated by `eslint-plugin-tsdoc`. Custom tags are defined in `tsdoc.json` and consumed downstream by [API Extractor ↗](https://api-extractor.com) and the AI HTML documentation generator.
+
+### Standard Tags (always use)
+
+- `@remarks` — Extended description, separated from the summary line.
+- `@typeParam` — Document generic type parameters (not `@template`).
+- `@param` — Document function/method parameters.
+- `@returns` — Document return values.
+- `@example` — Code examples in fenced TypeScript blocks.
+- `@public` / `@internal` — Release tag on every export. Use `@public` unless the export is not part of the package API surface.
+- `@packageDocumentation` — Required on every barrel file (`index.ts`) to describe the package entry point. Use `{@link ExportName}` to cross-reference primary exports.
+- `@see` — Reference to related external resources or docs.
+- `@deprecated` — Mark deprecated APIs with migration guidance.
+
+### Custom Tags
+
+- `@category` — Group exports by domain for navigation and table-of-contents generation (e.g., "Models", "Services", "Utilities", "Pipes", "Guards"). Repeatable — an export can belong to multiple categories (e.g., "Models", "Foundational", "Interface").
+- `@since` — The package version when the export was first introduced (e.g., "1.0.0"). Allows the docs generator to render version badges and filter by release.
+- `@related` — Cross-reference to a related export, optionally in another `@teqbench` package (e.g., "TbxAuthService" or "@teqbench/tbx-auth#TbxAuthService"). Repeatable — use one `@related` tag per reference.
+- `@usage` — Prose description of when and why to use this export, distinct from `@example` which shows code. Helps the AI generator produce contextual KB articles rather than raw API listings.
+- `@displayName` — Human-friendly label used as the heading in generated docs (e.g., "Base Model" for `TbxModel`). When omitted, the export name is used as-is.
+- `@order` — Numeric sort hint controlling display sequence. Applied at two levels:
+    - Top-level exports: controls display sequence within a `@category` on generated pages.
+    - Members (properties, methods): controls display sequence within the parent class/interface page. Members without `@order` are sorted by precedence group (see Member Ordering below), then alphabetically.
+
+### Member Ordering
+
+The documentation generator groups and sorts members within a class or interface page using the following precedence. Within each group, members are sorted by `@order` (lowest first), then alphabetically.
+
+1. Constructor(s)
+2. Identity properties (named `id`)
+3. Required readonly properties
+4. Required mutable properties
+5. Optional properties
+6. Abstract methods
+7. Public methods
+8. Protected methods
+9. Static members
+10. Events / callbacks
+11. Deprecated members
+
+Add `@order` to any member where alphabetical sorting within its group produces the wrong result. Common cases:
+
+- `id` should appear before `createdAt` and `updatedAt` — give `id` `@order 1`.
+- Lifecycle-related properties should appear in logical sequence — use `@order` to enforce creation-before-update ordering.
+
+### Comment Structure
+
+Top-level exports:
+
+````typescript
+/**
+ * Summary line — one sentence, no period
+ *
+ * @remarks
+ * Extended description. Multiple paragraphs allowed.
+ *
+ * @typeParam T - Description of the generic parameter.
+ *
+ * @usage
+ * When and why to use this export.
+ *
+ * @example
+ * ```typescript
+ * // usage example
+ * ```
+ *
+ * @category Models
+ * @category Foundational
+ * @displayName Base Model
+ * @order 1
+ * @since 1.0.0
+ * @related OtherExport
+ *
+ * @public
+ */
+````
+
+Member-level (properties, methods):
+
+```typescript
+/**
+ * Summary line — one sentence, no period
+ *
+ * @remarks
+ * Extended description if needed.
+ *
+ * @order 1
+ *
+ * @public
+ */
+```
 
 ## Commit Convention
 
-Follow **Conventional Commits** strictly:
+Follow **[Conventional Commits ↗](https://www.conventionalcommits.org)** strictly:
 
 - `feat(scope): ...` — New feature (minor bump)
 - `fix(scope): ...` — Bug fix (patch bump)
@@ -66,7 +161,7 @@ Follow **Conventional Commits** strictly:
 
 - Create feature or bugfix branches off `dev` when implementing issues.
 - Write clean, well-tested code that passes lint, typecheck, and tests.
-- Use conventional commit messages.
+- Use [Conventional Commits ↗](https://www.conventionalcommits.org) messages.
 - Create PRs targeting `dev` (never directly target `main`).
 - Keep PRs focused and atomic — one issue per PR.
 

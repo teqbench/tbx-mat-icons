@@ -1,13 +1,14 @@
 import { inject } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { TbxMatBaseIconService } from './base-icon.service';
+import { TbxMatIconService } from './base-icon.service';
 import { TbxMatIconType } from '../types/icon-type.type';
 
 /**
- * Abstract base class for SVG-based icon services.
+ * Abstract base class for SVG-based icon services
  *
- * Extends {@link TbxMatBaseIconService} with Angular Material's
+ * @remarks
+ * Extends {@link TbxMatIconService} with {@link https://material.angular.io | Angular Material}'s
  * `MatIconRegistry` and `DomSanitizer` integration. Subclasses call the
  * protected `register()` method with a name and SVG markup string —
  * they never interact with `MatIconRegistry` or `DomSanitizer` directly.
@@ -15,13 +16,14 @@ import { TbxMatIconType } from '../types/icon-type.type';
  * Once registered, icons are available in templates via
  * `<mat-icon [svgIcon]="name">`.
  *
- * ### How registration works
+ * How registration works:
  *
  * `register(name, svg)` does two things:
  *
  * 1. Passes `name, name` to the base class — the resolved value for an
  *    SVG icon is the icon name itself (used in the `[svgIcon]` binding),
  *    not the SVG markup.
+ *
  * 2. Registers the SVG markup with `MatIconRegistry` via
  *    `addSvgIconLiteral()`, sanitized through `DomSanitizer`.
  *
@@ -32,7 +34,16 @@ import { TbxMatIconType } from '../types/icon-type.type';
  * services map domain keys to ligature names; SVG services register
  * inline SVG markup with the Material icon registry.
  *
- * @example Extending for a custom SVG icon set:
+ * @typeParam TName - The icon key type. Defaults to `string`. Narrow to an
+ *   enum or union for compile-time safety on `register()` and `resolve()`.
+ *
+ * @usage
+ * Extend this class to create a service that registers inline SVG icons
+ * with {@link https://material.angular.io | Angular Material}'s `MatIconRegistry`. Override `initialize()` to
+ * call `register(name, svgMarkup)` for each icon. Consumers bind
+ * `[svgIcon]="icons.resolve(key)"` on `<mat-icon>`.
+ *
+ * @example
  * ```typescript
  * enum BrandIcon {
  *     Logo = 'logo',
@@ -60,13 +71,21 @@ import { TbxMatIconType } from '../types/icon-type.type';
  * // resolve(BrandIcon.Logo) → 'logo'
  * ```
  *
- * @typeParam TName - The icon key type. Defaults to `string`. Narrow to an
- *                    enum or union for compile-time safety on `register()`
- *                    and `resolve()`.
+ * @see {@link https://material.angular.io | Angular Material}
+ *
+ * @category Services
+ * @displayName SVG Icon Service
+ * @order 3
+ * @since 1.0.0
+ * @related TbxMatIconService
+ * @related TbxMatFontIconService
+ * @related TbxMatIconResolver
+ *
+ * @public
  */
 export abstract class TbxMatSvgIconService<
     TName extends string = string,
-> extends TbxMatBaseIconService<TName> {
+> extends TbxMatIconService<TName> {
     readonly iconType = TbxMatIconType.Svg;
 
     private readonly iconRegistry: MatIconRegistry;
@@ -80,14 +99,15 @@ export abstract class TbxMatSvgIconService<
     }
 
     /**
-     * Register an inline SVG icon with the Material icon registry.
+     * Register an inline SVG icon with the Material icon registry
      *
+     * @remarks
      * After registration the icon is available in templates via
      * `<mat-icon [svgIcon]="name">`. The SVG string is sanitized via
      * `DomSanitizer.bypassSecurityTrustHtml()` — callers are responsible
      * for ensuring the SVG content is trusted.
      *
-     * The base class stores `name → name` (identity mapping) so that
+     * The base class stores `name -> name` (identity mapping) so that
      * `resolve(name)` returns the `svgIcon` binding name. The SVG markup
      * itself is stored externally by `MatIconRegistry`, not in the base
      * class registry.
@@ -96,7 +116,9 @@ export abstract class TbxMatSvgIconService<
      * the base class registry and `MatIconRegistry`.
      *
      * @param name - The icon name used in `[svgIcon]="name"`
-     * @param svg  - The inline SVG markup string
+     * @param svg - The inline SVG markup string
+     *
+     * @public
      */
     protected override register(name: TName, svg: string): void;
     protected override register(name: string, svg: string): void;

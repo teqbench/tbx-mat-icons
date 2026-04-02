@@ -17,7 +17,7 @@ To report a vulnerability, open a [GitHub Security Advisory](https://github.com/
 
 Include as much of the following as possible:
 
-- Type of vulnerability (e.g. XSS, dependency with known CVE, credential exposure)
+- Type of vulnerability (e.g. XSS, dependency with known [CVE ↗](https://www.cve.org), credential exposure)
 - File(s) and line number(s) relevant to the issue
 - Steps to reproduce or proof-of-concept
 - Potential impact
