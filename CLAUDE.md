@@ -4,29 +4,29 @@ This file provides guidance for Claude Code when working in this repository.
 
 ## Package Overview
 
-Abstract icon service contracts for Angular Material. Provides `TbxMatIconService` as the shared registration/resolution base with `initialize()`/`reset()` lifecycle hooks, `TbxMatSvgIconService` for inline SVG registration via `MatIconRegistry`, and `TbxMatFontIconService` for font ligature resolution. All are generic abstract classes — concrete implementations override `initialize()` to register domain keys.
+Abstract icon service contracts for [Angular Material ↗](https://material.angular.io). Provides `TbxMatIconService` as the shared registration/resolution base with `initialize()`/`reset()` lifecycle hooks, `TbxMatSvgIconService` for inline SVG registration via `MatIconRegistry`, and `TbxMatFontIconService` for font ligature resolution. All are generic abstract classes — concrete implementations override `initialize()` to register domain keys.
 
-This is a `@teqbench` Angular library package (`tbx-mat-*`) built with TypeScript and ng-packagr.
+This is a `@teqbench` [Angular ↗](https://angular.dev) library package (`tbx-mat-*`) built with [TypeScript ↗](https://www.typescriptlang.org) and [ng-packagr ↗](https://github.com/ng-packagr/ng-packagr).
 
 ## Tech Stack
 
-- **Language:** TypeScript 5.9+ (strict mode, ES2022 target, bundler module resolution)
-- **Testing:** Vitest (globals enabled)
-- **Linting:** ESLint flat config with typescript-eslint
-- **Formatting:** Prettier (enforced via pre-commit hook and CI)
-- **Git Hooks:** Husky + lint-staged
-- **Versioning:** Release Please (Conventional Commits)
-- **Registry:** GitHub Packages (`@teqbench` scope)
+- **Language:** [TypeScript ↗](https://www.typescriptlang.org) 5.9+ (strict mode, [ES2022 ↗](https://262.ecma-international.org/13.0/) target, bundler module resolution)
+- **Testing:** [Vitest ↗](https://vitest.dev) (globals enabled)
+- **Linting:** [ESLint ↗](https://eslint.org) flat config with [typescript-eslint ↗](https://typescript-eslint.io)
+- **Formatting:** [Prettier ↗](https://prettier.io) (enforced via pre-commit hook and CI)
+- **Git Hooks:** [Husky ↗](https://typicode.github.io/husky/) + [lint-staged ↗](https://github.com/lint-staged/lint-staged)
+- **Versioning:** [Release Please ↗](https://github.com/googleapis/release-please) ([Conventional Commits ↗](https://www.conventionalcommits.org))
+- **Registry:** [GitHub Packages ↗](https://github.com/orgs/teqbench/packages) (`@teqbench` scope)
 
 ## Key Commands
 
 - `npm ci` — Install dependencies (use this, not `npm install`)
-- `npm run build` — Compile TypeScript to `dist/`
-- `npm test` — Run tests with Vitest
+- `npm run build` — Compile [TypeScript ↗](https://www.typescriptlang.org) to `dist/`
+- `npm test` — Run tests with [Vitest ↗](https://vitest.dev)
 - `npm run test:coverage` — Run tests with coverage enforcement (used in CI)
-- `npm run typecheck` — Full TypeScript type-check (`tsc --noEmit`)
-- `npm run lint` — Run ESLint
-- `npm run format` — Format all files with Prettier
+- `npm run typecheck` — Full [TypeScript ↗](https://www.typescriptlang.org) type-check (`tsc --noEmit`)
+- `npm run lint` — Run [ESLint ↗](https://eslint.org)
+- `npm run format` — Format all files with [Prettier ↗](https://prettier.io)
 - `npm run format:check` — Check formatting (CI mode)
 
 ## Project Structure
@@ -39,13 +39,13 @@ This is a `@teqbench` Angular library package (`tbx-mat-*`) built with TypeScrip
 
 ## Publishing
 
-- Packages are published to GitHub Packages (`@teqbench` scope) via the release workflow.
+- Packages are published to [GitHub Packages ↗](https://github.com/orgs/teqbench/packages) (`@teqbench` scope) via the release workflow.
 - Coverage thresholds are enforced in CI: 80% lines/functions/statements, 75% branches, per file.
-- **Build tooling:** ng-packagr is used to build Angular Package Format (APF) output. It uses bundler module resolution internally, so source files use extensionless relative imports (e.g., `'./foo.service'`). The `ng-package.json` at the repo root configures the entry point and output directory. ng-packagr generates its own `package.json` inside `dist/` with the correct APF entry points (`fesm2022/`, etc.). The release workflow publishes from `dist/` directly (`npm publish ./dist`), so consumers resolve against ng-packagr's generated `package.json`. The root `package.json` does not need `main`, `types`, or `exports` fields.
+- **Build tooling:** [ng-packagr ↗](https://github.com/ng-packagr/ng-packagr) is used to build [Angular Package Format (APF) ↗](https://angular.dev/tools/libraries/angular-package-format) output. It uses bundler module resolution internally, so source files use extensionless relative imports (e.g., `'./foo.service'`). The `ng-package.json` at the repo root configures the entry point and output directory. [ng-packagr ↗](https://github.com/ng-packagr/ng-packagr) generates its own `package.json` inside `dist/` with the correct APF entry points (`fesm2022/`, etc.). The release workflow publishes from `dist/` directly (`npm publish ./dist`), so consumers resolve against [ng-packagr ↗](https://github.com/ng-packagr/ng-packagr)'s generated `package.json`. The root `package.json` does not need `main`, `types`, or `exports` fields.
 
 ## TSDoc Convention
 
-All exported TypeScript declarations must have TSDoc comments validated by `eslint-plugin-tsdoc`. Custom tags are defined in `tsdoc.json` and consumed downstream by API Extractor and the AI HTML documentation generator.
+All exported [TypeScript ↗](https://www.typescriptlang.org) declarations must have [TSDoc ↗](https://tsdoc.org) comments validated by `eslint-plugin-tsdoc`. Custom tags are defined in `tsdoc.json` and consumed downstream by [API Extractor ↗](https://api-extractor.com) and the AI HTML documentation generator.
 
 ### Standard Tags (always use)
 
@@ -140,7 +140,7 @@ Member-level (properties, methods):
 
 ## Commit Convention
 
-Follow **Conventional Commits** strictly:
+Follow **[Conventional Commits ↗](https://www.conventionalcommits.org)** strictly:
 
 - `feat(scope): ...` — New feature (minor bump)
 - `fix(scope): ...` — Bug fix (patch bump)
@@ -161,7 +161,7 @@ Follow **Conventional Commits** strictly:
 
 - Create feature or bugfix branches off `dev` when implementing issues.
 - Write clean, well-tested code that passes lint, typecheck, and tests.
-- Use conventional commit messages.
+- Use [Conventional Commits ↗](https://www.conventionalcommits.org) messages.
 - Create PRs targeting `dev` (never directly target `main`).
 - Keep PRs focused and atomic — one issue per PR.
 

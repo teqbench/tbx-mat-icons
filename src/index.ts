@@ -1,9 +1,9 @@
 /**
- * Abstract icon service contracts for Angular Material
+ * Abstract icon service contracts for {@link https://material.angular.io | Angular Material}
  *
  * @remarks
  * This package provides the abstract service layer for icon registration and
- * resolution in Angular Material applications. All service classes are generic —
+ * resolution in {@link https://material.angular.io | Angular Material} applications. All service classes are generic —
  * narrow the type parameter to an enum or union for typed icon keys. Subclasses
  * override `initialize()` to register icons and inherit `resolve()` from the
  * base class.
@@ -24,7 +24,10 @@
  *
  * - {@link TBX_MAT_ICON_FONT_SET_MATERIAL_SYMBOLS_ROUNDED},
  *   {@link TBX_MAT_ICON_FONT_SET_MATERIAL_SYMBOLS_OUTLINED},
- *   {@link TBX_MAT_ICON_FONT_SET_MATERIAL_SYMBOLS_SHARP} — fontSet string constants for Material Symbols variants
+ *   {@link TBX_MAT_ICON_FONT_SET_MATERIAL_SYMBOLS_SHARP} — fontSet string constants for {@link https://fonts.google.com/icons | Material Symbols} variants
+ *
+ * @see {@link https://material.angular.io | Angular Material}
+ * @see {@link https://fonts.google.com/icons | Google Material Symbols}
  *
  * @packageDocumentation
  */

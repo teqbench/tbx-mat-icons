@@ -9,7 +9,7 @@ import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-
  *
  * @remarks
  * Extends {@link TbxMatIconService} with `fontSet` resolution for
- * Angular Material font icon rendering. Subclasses register domain keys
+ * {@link https://material.angular.io | Angular Material} font icon rendering. Subclasses register domain keys
  * mapped to font ligature names via `register()` — `resolve()` is
  * inherited from the base class and returns the ligature for a given key.
  *
@@ -38,7 +38,7 @@ import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-
  *    argument inherit this value. The consuming component must bind
  *    `[fontSet]="icons.fontSet"` on `<mat-icon>`.
  *
- * 3. `MAT_ICON_DEFAULT_OPTIONS.fontSet` — Angular Material's global
+ * 3. `MAT_ICON_DEFAULT_OPTIONS.fontSet` — {@link https://material.angular.io | Angular Material}'s global
  *    icon default. When this is the source, `<mat-icon>` already uses
  *    the correct fontSet globally, so the component does not need
  *    a `[fontSet]` binding.
@@ -66,7 +66,7 @@ import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-
  *
  * @usage
  * Extend this class to create a service that maps domain-specific icon
- * keys to Material Symbols font ligature names. Override `initialize()`
+ * keys to {@link https://fonts.google.com/icons | Material Symbols} font ligature names. Override `initialize()`
  * to call `register(key, ligature)` for each icon. Optionally pass a
  * fontSet to `super()` or provide {@link TBX_MAT_FONT_ICON_DEFAULT_FONT_SET}.
  *
@@ -138,6 +138,9 @@ import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-
  * // readonly icons = inject(MySeverityIconService);
  * // <mat-icon>{{ icons.resolve(severity) }}</mat-icon>
  * ```
+ *
+ * @see {@link https://material.angular.io | Angular Material}
+ * @see {@link https://fonts.google.com/icons | Google Material Symbols}
  *
  * @category Services
  * @displayName Font Icon Service

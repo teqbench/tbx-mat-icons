@@ -8,7 +8,7 @@ import { TbxMatIconType } from '../types/icon-type.type';
  * Abstract base class for SVG-based icon services
  *
  * @remarks
- * Extends {@link TbxMatIconService} with Angular Material's
+ * Extends {@link TbxMatIconService} with {@link https://material.angular.io | Angular Material}'s
  * `MatIconRegistry` and `DomSanitizer` integration. Subclasses call the
  * protected `register()` method with a name and SVG markup string —
  * they never interact with `MatIconRegistry` or `DomSanitizer` directly.
@@ -39,7 +39,7 @@ import { TbxMatIconType } from '../types/icon-type.type';
  *
  * @usage
  * Extend this class to create a service that registers inline SVG icons
- * with Angular Material's `MatIconRegistry`. Override `initialize()` to
+ * with {@link https://material.angular.io | Angular Material}'s `MatIconRegistry`. Override `initialize()` to
  * call `register(name, svgMarkup)` for each icon. Consumers bind
  * `[svgIcon]="icons.resolve(key)"` on `<mat-icon>`.
  *
@@ -70,6 +70,8 @@ import { TbxMatIconType } from '../types/icon-type.type';
  * // <mat-icon [svgIcon]="icons.resolve(BrandIcon.Logo)!"></mat-icon>
  * // resolve(BrandIcon.Logo) → 'logo'
  * ```
+ *
+ * @see {@link https://material.angular.io | Angular Material}
  *
  * @category Services
  * @displayName SVG Icon Service
