@@ -77,6 +77,7 @@ import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-
  *     Error = 'error',
  * }
  *
+ * // SharpIconService is a hypothetical consumer-defined subclass
  * @Injectable({ providedIn: 'root' })
  * export class SharpIconService extends TbxMatFontIconService<Severity> {
  *     constructor() {
@@ -104,6 +105,7 @@ import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-
  *     { provide: TBX_MAT_FONT_ICON_DEFAULT_FONT_SET, useValue: TBX_MAT_ICON_FONT_SET_MATERIAL_SYMBOLS_ROUNDED },
  * ]
  *
+ * // MySeverityIconService is a hypothetical consumer-defined subclass
  * @Injectable({ providedIn: 'root' })
  * export class MySeverityIconService extends TbxMatFontIconService<Severity> {
  *     protected override initialize(): void {
@@ -125,6 +127,7 @@ import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-
  *     { provide: MAT_ICON_DEFAULT_OPTIONS, useValue: { fontSet: 'material-symbols-rounded' } },
  * ]
  *
+ * // MySeverityIconService is a hypothetical consumer-defined subclass
  * @Injectable({ providedIn: 'root' })
  * export class MySeverityIconService extends TbxMatFontIconService<Severity> {
  *     protected override initialize(): void {
