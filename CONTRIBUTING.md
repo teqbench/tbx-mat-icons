@@ -4,7 +4,7 @@
 
 ### Node.js
 
-Install the version specified in `.nvmrc` (Node 24+). If you use nvm:
+Install the version specified in `.nvmrc` (Node 24+). If you use [nvm ↗](https://github.com/nvm-sh/nvm):
 
 ```bash
 nvm install

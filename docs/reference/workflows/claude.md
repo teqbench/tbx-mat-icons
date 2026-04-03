@@ -154,11 +154,11 @@ Claude's capabilities are explicitly restricted via `--allowedTools` to prevent 
 
 ### npm Commands (Via Bash Allowlist)
 
-| Allowed   | Purpose                                 |
-| --------- | --------------------------------------- |
-| `npm run` | Run project scripts (test, lint, build) |
-| `npm ci`  | Install dependencies                    |
-| `npx`     | Run Node.js binaries                    |
+| Allowed   | Purpose                                      |
+| --------- | -------------------------------------------- |
+| `npm run` | Run project scripts (test, lint, build)      |
+| `npm ci`  | Install dependencies                         |
+| `npx`     | Run [Node.js ↗](https://nodejs.org) binaries |
 
 ---
 
