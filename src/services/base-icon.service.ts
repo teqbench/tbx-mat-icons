@@ -54,6 +54,7 @@ import { type TbxMatIconType } from '../types/icon-type.type';
  * ```typescript
  * enum Severity { Success = 'success', Error = 'error' }
  *
+ * // SeverityIconService is a hypothetical consumer-defined subclass
  * @Injectable({ providedIn: 'root' })
  * export class SeverityIconService extends TbxMatFontIconService<Severity> {
  *     protected override initialize(): void {
@@ -69,6 +70,7 @@ import { type TbxMatIconType } from '../types/icon-type.type';
  * ```typescript
  * enum Brand { Logo = 'logo', Wordmark = 'wordmark' }
  *
+ * // BrandIconService is a hypothetical consumer-defined subclass
  * @Injectable({ providedIn: 'root' })
  * export class BrandIconService extends TbxMatSvgIconService<Brand> {
  *     protected override initialize(): void {

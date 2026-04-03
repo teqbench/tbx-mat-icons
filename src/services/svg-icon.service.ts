@@ -55,6 +55,7 @@ import { TbxMatIconType } from '../types/icon-type.type';
  *     [BrandIcon.Wordmark]: '<svg>…</svg>',
  * };
  *
+ * // BrandSvgIconService is a hypothetical consumer-defined subclass
  * @Injectable({ providedIn: 'root' })
  * export class BrandSvgIconService extends TbxMatSvgIconService<BrandIcon> {
  *     protected override initialize(): void {
