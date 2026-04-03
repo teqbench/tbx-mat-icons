@@ -235,10 +235,10 @@ export class StatusComponent {
 
 | Axis   | Range   | Default | Description                                                                                                     |
 | ------ | ------- | ------- | --------------------------------------------------------------------------------------------------------------- |
-| `FILL` | 0–1     | 0       | Outlined (0) or filled (1). A single icon renders both states — no separate icon set needed.                    |
-| `wght` | 100–700 | 400     | Stroke weight. Higher values produce bolder icons for visual emphasis and hierarchy.                            |
-| `GRAD` | -50–200 | 0       | Grade. Fine-grained weight adjustment without changing icon size. Works across text and icons for visual unity. |
-| `opsz` | 20–48   | 48      | Optical size. Automatically adjusts stroke weight at different display sizes for consistent appearance.         |
+| `FILL` | 0‑1     | 0       | Outlined (0) or filled (1). A single icon renders both states — no separate icon set needed.                    |
+| `wght` | 100‑700 | 400     | Stroke weight. Higher values produce bolder icons for visual emphasis and hierarchy.                            |
+| `GRAD` | ‑50‑200 | 0       | Grade. Fine-grained weight adjustment without changing icon size. Works across text and icons for visual unity. |
+| `opsz` | 20‑48   | 48      | Optical size. Automatically adjusts stroke weight at different display sizes for consistent appearance.         |
 
 ### FILL — outlined vs filled
 
