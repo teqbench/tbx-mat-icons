@@ -45,6 +45,6 @@ export * from './constants/font-set.constants';
 export { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from './tokens/font-icon-default-font-set.token';
 
 // Abstract services
-export { TbxMatIconService } from './services/base-icon.service';
+export { TbxMatIconService } from './services/icon.service';
 export { TbxMatSvgIconService } from './services/svg-icon.service';
 export { TbxMatFontIconService } from './services/font-icon.service';
