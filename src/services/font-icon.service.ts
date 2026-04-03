@@ -1,18 +1,19 @@
 import { inject } from '@angular/core';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
-import { TbxMatBaseIconService } from './base-icon.service';
+import { TbxMatIconService } from './icon.service';
 import { TbxMatIconType } from '../types/icon-type.type';
 import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-font-set.token';
 
 /**
- * Abstract base class for font-based icon services.
+ * Abstract base class for font-based icon services
  *
- * Extends {@link TbxMatBaseIconService} with `fontSet` resolution for
- * Angular Material font icon rendering. Subclasses register domain keys
+ * @remarks
+ * Extends {@link TbxMatIconService} with `fontSet` resolution for
+ * {@link https://material.angular.io | Angular Material} font icon rendering. Subclasses register domain keys
  * mapped to font ligature names via `register()` — `resolve()` is
  * inherited from the base class and returns the ligature for a given key.
  *
- * ### How registration works
+ * How registration works:
  *
  * `register(name, value)` is inherited from the base class. For font
  * icons, `name` is the domain key (e.g. an enum member like `'success'`)
@@ -22,59 +23,61 @@ import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-
  * After registration, `resolve(name)` returns the ligature, which the
  * component renders as text content inside `<mat-icon>`.
  *
- * ### fontSet resolution
+ * fontSet resolution:
  *
  * The `fontSet` value is determined by the first match in this order:
  *
- * 1. **Explicit constructor argument** — `super('material-symbols-sharp')`.
+ * 1. Explicit constructor argument — `super('material-symbols-sharp')`.
  *    The service uses a specific fontSet regardless of any global
  *    configuration. The consuming component must bind
  *    `[fontSet]="icons.fontSet"` on `<mat-icon>` so the icon renders
  *    with the correct font family.
  *
- * 2. **`TBX_MAT_FONT_ICON_DEFAULT_FONT_SET` token** — set once in
+ * 2. {@link TBX_MAT_FONT_ICON_DEFAULT_FONT_SET} token — set once in
  *    `app.config.ts`. All subclasses that call `super()` without an
  *    argument inherit this value. The consuming component must bind
  *    `[fontSet]="icons.fontSet"` on `<mat-icon>`.
  *
- * 3. **`MAT_ICON_DEFAULT_OPTIONS.fontSet`** — Angular Material's global
+ * 3. `MAT_ICON_DEFAULT_OPTIONS.fontSet` — {@link https://material.angular.io | Angular Material}'s global
  *    icon default. When this is the source, `<mat-icon>` already uses
- *    the correct fontSet globally, so the component does **not** need
+ *    the correct fontSet globally, so the component does not need
  *    a `[fontSet]` binding.
  *
- * 4. **Error** — if none of the above provides a fontSet, the
+ * 4. Error — if none of the above provides a fontSet, the
  *    constructor throws.
  *
- * ### When to bind `[fontSet]` in the component
+ * When to bind `[fontSet]` in the component:
  *
- * - **Steps 1 and 2:** The service uses a fontSet that differs from (or
+ * - Steps 1 and 2: The service uses a fontSet that differs from (or
  *   is independent of) the global `MAT_ICON_DEFAULT_OPTIONS`. The
  *   component must bind `[fontSet]="icons.fontSet"` to override the
  *   global for that icon.
  *
- *   ```html
- *   <mat-icon [fontSet]="icons.fontSet">{{ icons.resolve(key) }}</mat-icon>
- *   ```
- *
- * - **Step 3:** The fontSet comes from `MAT_ICON_DEFAULT_OPTIONS`, which
+ * - Step 3: The fontSet comes from `MAT_ICON_DEFAULT_OPTIONS`, which
  *   `<mat-icon>` already uses by default. No `[fontSet]` binding is
  *   needed.
- *
- *   ```html
- *   <mat-icon>{{ icons.resolve(key) }}</mat-icon>
- *   ```
  *
  * This is the font counterpart to {@link TbxMatSvgIconService}. SVG
  * services register inline SVG markup with `MatIconRegistry`; font
  * services map domain keys to ligature names.
  *
- * @example Step 1 — Explicit fontSet via constructor (overrides all globals):
+ * @typeParam TName - The icon key type. Defaults to `string`. Narrow to an
+ *   enum or union for compile-time safety on `register()` and `resolve()`.
+ *
+ * @usage
+ * Extend this class to create a service that maps domain-specific icon
+ * keys to {@link https://fonts.google.com/icons | Material Symbols} font ligature names. Override `initialize()`
+ * to call `register(key, ligature)` for each icon. Optionally pass a
+ * fontSet to `super()` or provide {@link TBX_MAT_FONT_ICON_DEFAULT_FONT_SET}.
+ *
+ * @example Explicit fontSet via constructor (overrides all globals):
  * ```typescript
  * enum Severity {
  *     Success = 'success',
  *     Error = 'error',
  * }
  *
+ * // SharpIconService is a hypothetical consumer-defined subclass
  * @Injectable({ providedIn: 'root' })
  * export class SharpIconService extends TbxMatFontIconService<Severity> {
  *     constructor() {
@@ -95,13 +98,14 @@ import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-
  * // resolve(Severity.Success) → 'check_circle'
  * ```
  *
- * @example Step 2 — fontSet from TBX_MAT_FONT_ICON_DEFAULT_FONT_SET token:
+ * @example fontSet from TBX_MAT_FONT_ICON_DEFAULT_FONT_SET token:
  * ```typescript
  * // app.config.ts
  * providers: [
  *     { provide: TBX_MAT_FONT_ICON_DEFAULT_FONT_SET, useValue: TBX_MAT_ICON_FONT_SET_MATERIAL_SYMBOLS_ROUNDED },
  * ]
  *
+ * // MySeverityIconService is a hypothetical consumer-defined subclass
  * @Injectable({ providedIn: 'root' })
  * export class MySeverityIconService extends TbxMatFontIconService<Severity> {
  *     protected override initialize(): void {
@@ -116,13 +120,14 @@ import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-
  * // <mat-icon [fontSet]="icons.fontSet">{{ icons.resolve(severity) }}</mat-icon>
  * ```
  *
- * @example Step 3 — fontSet from MAT_ICON_DEFAULT_OPTIONS (global default):
+ * @example fontSet from MAT_ICON_DEFAULT_OPTIONS (global default):
  * ```typescript
  * // app.config.ts
  * providers: [
  *     { provide: MAT_ICON_DEFAULT_OPTIONS, useValue: { fontSet: 'material-symbols-rounded' } },
  * ]
  *
+ * // MySeverityIconService is a hypothetical consumer-defined subclass
  * @Injectable({ providedIn: 'root' })
  * export class MySeverityIconService extends TbxMatFontIconService<Severity> {
  *     protected override initialize(): void {
@@ -137,23 +142,39 @@ import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-
  * // <mat-icon>{{ icons.resolve(severity) }}</mat-icon>
  * ```
  *
- * @typeParam TName - The icon key type. Defaults to `string`. Narrow to an
- *                    enum or union for compile-time safety on `register()`
- *                    and `resolve()`.
+ * @see {@link https://material.angular.io | Angular Material}
+ * @see {@link https://fonts.google.com/icons | Google Material Symbols}
+ *
+ * @category Services
+ * @displayName Font Icon Service
+ * @order 2
+ * @since 1.0.0
+ * @related TbxMatIconService
+ * @related TbxMatSvgIconService
+ * @related TBX_MAT_FONT_ICON_DEFAULT_FONT_SET
+ * @related TbxMatIconResolver
+ *
+ * @public
  */
 export abstract class TbxMatFontIconService<
     TName extends string = string,
-> extends TbxMatBaseIconService<TName> {
+> extends TbxMatIconService<TName> {
     readonly iconType = TbxMatIconType.Font;
 
-    /** The fontSet this service resolves against. */
+    /**
+     * The fontSet this service resolves against
+     *
+     * @public
+     */
     readonly fontSet: string;
 
     /**
      * @param fontSet - Optional fontSet identifier (e.g., `'material-symbols-rounded'`).
-     *                  When provided, takes precedence over all global defaults.
-     *                  When omitted, falls back to `TBX_MAT_FONT_ICON_DEFAULT_FONT_SET`,
-     *                  then `MAT_ICON_DEFAULT_OPTIONS.fontSet`.
+     *   When provided, takes precedence over all global defaults.
+     *   When omitted, falls back to {@link TBX_MAT_FONT_ICON_DEFAULT_FONT_SET},
+     *   then `MAT_ICON_DEFAULT_OPTIONS.fontSet`.
+     *
+     * @public
      */
     constructor(fontSet?: string) {
         super();

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { TbxMatBaseIconService } from './base-icon.service';
+import { TbxMatIconService } from './icon.service';
 import { TbxMatIconType } from '../types/icon-type.type';
 
 enum TestIcon {
@@ -8,7 +8,7 @@ enum TestIcon {
 }
 
 /** Minimal concrete subclass — no initialize() override, empty registry. */
-class EmptyService extends TbxMatBaseIconService<TestIcon> {
+class EmptyService extends TbxMatIconService<TestIcon> {
     readonly iconType = TbxMatIconType.Font;
     testRegister(name: string, value: string): void {
         this.register(name, value);
@@ -28,7 +28,7 @@ class EmptyService extends TbxMatBaseIconService<TestIcon> {
  * Calls initialize() from the constructor to simulate the pattern used
  * by intermediate classes (TbxMatFontIconService, TbxMatSvgIconService).
  */
-class DefaultsService extends TbxMatBaseIconService<TestIcon> {
+class DefaultsService extends TbxMatIconService<TestIcon> {
     readonly iconType = TbxMatIconType.Font;
 
     constructor() {
@@ -51,7 +51,7 @@ class DefaultsService extends TbxMatBaseIconService<TestIcon> {
     }
 }
 
-describe('TbxMatBaseIconService', () => {
+describe('TbxMatIconService', () => {
     describe('register and resolve', () => {
         it('should resolve a registered key', () => {
             const service = new EmptyService();
