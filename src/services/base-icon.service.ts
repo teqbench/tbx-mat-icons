@@ -106,7 +106,11 @@ export abstract class TbxMatIconService<
      */
     abstract readonly iconType: TbxMatIconType;
 
-    /** Internal name → value store. See class-level docs for semantics. @internal */
+    /**
+     * Internal name → value store. See class-level docs for semantics
+     *
+     * @internal
+     */
     private readonly registry = new Map<string, string>();
 
     /**
