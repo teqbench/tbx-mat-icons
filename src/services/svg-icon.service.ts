@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { TbxMatIconService } from './base-icon.service';
+import { TbxMatIconService } from './icon.service';
 import { TbxMatIconType } from '../types/icon-type.type';
 
 /**

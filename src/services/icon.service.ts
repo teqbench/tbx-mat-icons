@@ -83,7 +83,6 @@ import { type TbxMatIconType } from '../types/icon-type.type';
  * ```
  *
  * @category Services
- * @category Foundational
  * @displayName Base Icon Service
  * @order 1
  * @since 4.0.0
