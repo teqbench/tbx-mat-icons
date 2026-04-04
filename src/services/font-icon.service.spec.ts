@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
 import { TbxMatFontIconService } from './font-icon.service';
-import { TbxMatIconType } from '../types/icon-type.type';
+import { TbxMatIconType } from '../enums/icon-type.enum';
 import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-font-set.token';
 
 enum TestSeverity {

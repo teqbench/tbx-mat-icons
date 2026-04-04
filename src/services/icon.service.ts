@@ -1,5 +1,5 @@
 import type { TbxMatIconResolver } from '../contracts/icon-resolver.contract';
-import { type TbxMatIconType } from '../types/icon-type.type';
+import { type TbxMatIconType } from '../enums/icon-type.enum';
 
 /**
  * Abstract base class for all icon services
