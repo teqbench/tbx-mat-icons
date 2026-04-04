@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { TbxMatIconService } from './icon.service';
-import { TbxMatIconType } from '../types/icon-type.type';
+import { TbxMatIconType } from '../enums/icon-type.enum';
 
 enum TestIcon {
     Success = 'success',

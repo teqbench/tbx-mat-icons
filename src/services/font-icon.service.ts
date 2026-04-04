@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
 import { TbxMatIconService } from './icon.service';
-import { TbxMatIconType } from '../types/icon-type.type';
+import { TbxMatIconType } from '../enums/icon-type.enum';
 import { TBX_MAT_FONT_ICON_DEFAULT_FONT_SET } from '../tokens/font-icon-default-font-set.token';
 
 /**
