@@ -14,7 +14,7 @@
  * bind either text content or `[svgIcon]` on `<mat-icon>` in a template
  * that must support both icon types.
  *
- * @category Types
+ * @category Enums
  * @displayName Icon Type
  * @order 2
  * @since 4.0.0

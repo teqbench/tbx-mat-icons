@@ -35,8 +35,8 @@
 // Contracts
 export type { TbxMatIconResolver } from './contracts/icon-resolver.contract';
 
-// Types
-export { TbxMatIconType } from './types/icon-type.type';
+// Enums
+export { TbxMatIconType } from './enums/icon-type.enum';
 
 // Constants
 export * from './constants/font-set.constants';
