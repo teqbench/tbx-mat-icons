@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.0.2](https://github.com/teqbench/tbx-mat-icons/compare/v4.0.1...v4.0.2) (2026-04-06)
+
+
+### Bug Fixes
+
+* **deps:** update vite to 7.3.2/8.0.5 to resolve CVEs ([b6110e1](https://github.com/teqbench/tbx-mat-icons/commit/b6110e1ce5ea3043826d9678290e98c4bc0ceeec))
+* **deps:** update vite to 7.3.2/8.0.5 to resolve CVEs ([f1a250d](https://github.com/teqbench/tbx-mat-icons/commit/f1a250d5d76703f8f31409553b509c09d7bffe46))
+
 ## [4.0.1](https://github.com/teqbench/tbx-mat-icons/compare/v4.0.0...v4.0.1) (2026-04-03)
 
 
