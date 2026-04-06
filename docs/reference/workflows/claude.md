@@ -50,11 +50,11 @@ jobs:
 
 ## Secrets Used
 
-| Secret              | Purpose                                  |
-| ------------------- | ---------------------------------------- |
-| `APP_ID`            | GitHub App ID for generating a bot token |
-| `APP_PRIVATE_KEY`   | GitHub App private key                   |
-| `ANTHROPIC_API_KEY` | Authenticates with the Anthropic API     |
+| Secret              | Purpose                                                              |
+| ------------------- | -------------------------------------------------------------------- |
+| `APP_ID`            | GitHub App ID for generating a bot token                             |
+| `APP_PRIVATE_KEY`   | GitHub App private key                                               |
+| `ANTHROPIC_API_KEY` | Authenticates with the [Anthropic API ↗](https://docs.anthropic.com) |
 
 The app token is used for checkout with submodules (Claude Code skills) and for full repository access.
 
@@ -154,11 +154,11 @@ Claude's capabilities are explicitly restricted via `--allowedTools` to prevent 
 
 ### npm Commands (Via Bash Allowlist)
 
-| Allowed   | Purpose                                 |
-| --------- | --------------------------------------- |
-| `npm run` | Run project scripts (test, lint, build) |
-| `npm ci`  | Install dependencies                    |
-| `npx`     | Run Node.js binaries                    |
+| Allowed   | Purpose                                      |
+| --------- | -------------------------------------------- |
+| `npm run` | Run project scripts (test, lint, build)      |
+| `npm ci`  | Install dependencies                         |
+| `npx`     | Run [Node.js ↗](https://nodejs.org) binaries |
 
 ---
 
@@ -194,7 +194,7 @@ Claude will:
 2. Create a feature or bugfix branch off `dev`
 3. Implement the requested changes
 4. Run tests and lint to verify
-5. Commit with conventional commit messages
+5. Commit with [Conventional Commits ↗](https://www.conventionalcommits.org) messages
 6. Push and create a PR targeting `dev`
 
 ---

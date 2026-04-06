@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.1](https://github.com/teqbench/tbx-mat-icons/compare/v4.0.0...v4.0.1) (2026-04-03)
+
+
+### Bug Fixes
+
+* **docs:** use email reporting channel in SECURITY.md for private repo ([4e40407](https://github.com/teqbench/tbx-mat-icons/commit/4e404076c2515ad93a0e991bbbeee8731dc6f27b))
+
 ## [4.0.0](https://github.com/teqbench/tbx-mat-icons/compare/v3.0.0...v4.0.0) (2026-03-29)
 
 

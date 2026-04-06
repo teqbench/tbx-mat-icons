@@ -2,11 +2,11 @@
 
 ![Build Status](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-build-status.json) ![Tests](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-tests.json) ![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-coverage.json) ![Version](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-version.json) ![Build Number](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/teqbench-shields-bot/a69600f4ed4ebed89ffb35d808e05eb4/raw/tbx-mat-icons-main-build-number.json)
 
-> Abstract icon service contracts for Angular Material projects. Provides `TbxMatBaseIconService` as the shared registration/resolution base, `TbxMatSvgIconService` for inline SVG registration via `MatIconRegistry`, and `TbxMatFontIconService` for font ligature resolution. All are generic abstract classes — concrete implementations override `initialize()` to register domain keys and their resolved values.
+> Abstract icon service contracts for [Angular Material ↗](https://material.angular.io) projects. Provides `TbxMatIconService` as the shared registration/resolution base, `TbxMatSvgIconService` for inline SVG registration via `MatIconRegistry`, and `TbxMatFontIconService` for font ligature resolution. All are generic abstract classes — concrete implementations override `initialize()` to register domain keys and their resolved values.
 
 ## Installation
 
-Configure npm to use GitHub Packages for the `@teqbench` scope:
+Configure npm to use [GitHub Packages ↗](https://github.com/orgs/teqbench/packages) for the `@teqbench` scope:
 
 ```bash
 echo "@teqbench:registry=https://npm.pkg.github.com" >> .npmrc
@@ -72,7 +72,7 @@ export class BrandComponent {
 
 1. **Explicit constructor argument** — `super('material-symbols-sharp')`
 2. **`TBX_MAT_FONT_ICON_DEFAULT_FONT_SET` token** — set once in `app.config.ts`
-3. **`MAT_ICON_DEFAULT_OPTIONS.fontSet`** — Angular Material's global icon default
+3. **`MAT_ICON_DEFAULT_OPTIONS.fontSet`** — [Angular Material ↗](https://material.angular.io)'s global icon default
 4. **Error** — if none of the above provides a fontSet
 
 For steps 1 and 2, the consuming component must bind `[fontSet]="icons.fontSet"` on `<mat-icon>` so the icon renders with the correct font family. For step 3, `<mat-icon>` already uses the global default — no binding needed.
@@ -177,7 +177,7 @@ export class StatusComponent {
 
 #### Step 3: fontSet from `MAT_ICON_DEFAULT_OPTIONS`
 
-When the global Material icon options already configure the fontSet, the service picks it up automatically.
+When the global [Angular Material ↗](https://material.angular.io) icon options already configure the fontSet, the service picks it up automatically.
 
 ```typescript
 // app.config.ts
@@ -217,6 +217,170 @@ export class StatusComponent {
 }
 ```
 
+## Material Symbols Variable Font Axes
+
+[Material Symbols ↗](https://fonts.google.com/icons) are variable fonts that expose four CSS axes via `font-variation-settings`. These axes give fine-grained control over icon appearance without switching font files or adding extra CSS classes. All four axes must be specified together — omitting an axis resets it to the font default.
+
+```css
+.material-symbols-rounded {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+}
+```
+
+### Axis reference
+
+| Axis   | Range   | Default | Description                                                                                                     |
+| ------ | ------- | ------- | --------------------------------------------------------------------------------------------------------------- |
+| `FILL` | 0‑1     | 0       | Outlined (0) or filled (1). A single icon renders both states — no separate icon set needed.                    |
+| `wght` | 100‑700 | 400     | Stroke weight. Higher values produce bolder icons for visual emphasis and hierarchy.                            |
+| `GRAD` | ‑50‑200 | 0       | Grade. Fine-grained weight adjustment without changing icon size. Works across text and icons for visual unity. |
+| `opsz` | 20‑48   | 48      | Optical size. Automatically adjusts stroke weight at different display sizes for consistent appearance.         |
+
+### FILL — outlined vs filled
+
+The fill axis toggles between outlined and filled rendering. Use it to convey state transitions (e.g., inactive to active, default to selected) through animation or interaction.
+
+```css
+/* Outlined (default) */
+.material-symbols-rounded {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+}
+
+/* Filled */
+.material-symbols-rounded {
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+}
+
+/* Animate from outlined to filled */
+@keyframes icon-fill {
+    from {
+        font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+    }
+    to {
+        font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+    }
+}
+
+.material-symbols-rounded {
+    animation: icon-fill 0.3s ease-in-out forwards;
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+}
+```
+
+### wght — weight
+
+Controls stroke thickness. Use lower values (100–300) for secondary or decorative icons and higher values (500–700) for emphasis or primary actions.
+
+```css
+/* Thin (100) */
+.material-symbols-rounded {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 100,
+        'GRAD' 0,
+        'opsz' 24;
+}
+
+/* Bold (700) */
+.material-symbols-rounded {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 700,
+        'GRAD' 0,
+        'opsz' 24;
+}
+```
+
+### GRAD — grade
+
+Adjusts apparent weight more subtly than `wght`, without changing the icon's overall size or layout. Useful for:
+
+- **Low emphasis (-25):** reduce glare for light icons on dark backgrounds
+- **High emphasis (200):** increase prominence without affecting surrounding layout
+
+```css
+/* Reduce glare on dark backgrounds */
+.dark-theme .material-symbols-rounded {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' -25,
+        'opsz' 24;
+}
+
+/* High emphasis */
+.material-symbols-rounded.emphasized {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 200,
+        'opsz' 24;
+}
+```
+
+### opsz — optical size
+
+Matches stroke weight to the icon's display size. Smaller optical sizes (20) produce thicker strokes so icons remain legible at small sizes. Larger values (48) produce thinner, more detailed strokes for display-size icons.
+
+```css
+/* Small icon (e.g., inline with body text) */
+.material-symbols-rounded.sm {
+    font-size: 20px;
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 20;
+}
+
+/* Large icon (e.g., hero or empty state) */
+.material-symbols-rounded.lg {
+    font-size: 48px;
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 48;
+}
+```
+
+### Loading the variable font
+
+Include the font via Google Fonts with the full axis range to enable all customizations:
+
+```html
+<link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet"
+/>
+```
+
+Replace `Rounded` with `Outlined` or `Sharp` to match the font set used in your application.
+
 ## API Reference
 
 ### `TbxMatIconType`
@@ -226,13 +390,13 @@ Enum discriminant for the icon rendering strategy. Used by consumers to determin
 - **`TbxMatIconType.Font`** (`'font'`) — render as font ligature text content
 - **`TbxMatIconType.Svg`** (`'svg'`) — render via `[svgIcon]` binding
 
-### `ITbxMatIconResolver<T extends string = string>`
+### `TbxMatIconResolver<T extends string = string>`
 
-Contract for resolving icon keys to usable icon identifiers. Implemented by `TbxMatBaseIconService` and inherited by both service subclasses.
+Contract for resolving icon keys to usable icon identifiers. Implemented by `TbxMatIconService` and inherited by both service subclasses.
 
 - **`resolve(name: T): string | undefined`** — Resolve an icon key to an icon identifier (font ligature name or registered svgIcon name). Returns `undefined` if the key is not recognized.
 
-### `TbxMatBaseIconService<T extends string = string>`
+### `TbxMatIconService<T extends string = string>`
 
 Abstract base class providing shared registration and resolution mechanics. Do not extend directly — use `TbxMatSvgIconService` or `TbxMatFontIconService`.
 
@@ -244,17 +408,17 @@ Abstract base class providing shared registration and resolution mechanics. Do n
 
 ### `TbxMatSvgIconService<T extends string = string>`
 
-Abstract base class for SVG-based icon services. Extends `TbxMatBaseIconService` with `MatIconRegistry` + `DomSanitizer` integration. Sets `iconType` to `TbxMatIconType.Svg`.
+Abstract base class for SVG-based icon services. Extends `TbxMatIconService` with `MatIconRegistry` + `DomSanitizer` integration. Sets `iconType` to `TbxMatIconType.Svg`.
 
-- **`protected register(name: T, svg: string): void`** — Register inline SVG markup with the Material icon registry. The base class stores `name → name` (identity mapping); the SVG markup is stored by `MatIconRegistry`. Re-registering replaces both entries.
-- Inherits `resolve()` from `TbxMatBaseIconService` — returns the icon name for use in `[svgIcon]="name"`.
+- **`protected register(name: T, svg: string): void`** — Register inline SVG markup with the [Angular Material ↗](https://material.angular.io) icon registry. The base class stores `name → name` (identity mapping); the SVG markup is stored by `MatIconRegistry`. Re-registering replaces both entries.
+- Inherits `resolve()` from `TbxMatIconService` — returns the icon name for use in `[svgIcon]="name"`.
 
 ### `TbxMatFontIconService<T extends string = string>`
 
-Abstract base class for font-based icon services. Extends `TbxMatBaseIconService` with fontSet resolution. Sets `iconType` to `TbxMatIconType.Font`.
+Abstract base class for font-based icon services. Extends `TbxMatIconService` with fontSet resolution. Sets `iconType` to `TbxMatIconType.Font`.
 
 - **`readonly fontSet: string`** — The fontSet this service resolves against (set via constructor, `TBX_MAT_FONT_ICON_DEFAULT_FONT_SET` token, or `MAT_ICON_DEFAULT_OPTIONS`).
-- Inherits `register()` and `resolve()` from `TbxMatBaseIconService` — register domain keys mapped to font ligature names.
+- Inherits `register()` and `resolve()` from `TbxMatIconService` — register domain keys mapped to font ligature names.
 
 ### `TBX_MAT_FONT_ICON_DEFAULT_FONT_SET`
 
@@ -268,14 +432,19 @@ Abstract base class for font-based icon services. Extends `TbxMatBaseIconService
 
 ## Compatibility
 
-| Dependency               | Version  |
-| ------------------------ | -------- |
-| Angular                  | ^21.0.0  |
-| Angular Material         | ^21.0.0  |
-| Angular Platform Browser | ^21.0.0  |
-| TypeScript               | ~5.9.0   |
-| Node.js                  | >=24.0.0 |
+| Dependency                                                             | Version  |
+| ---------------------------------------------------------------------- | -------- |
+| [Angular ↗](https://angular.dev)                                       | ^21.0.0  |
+| [Angular Material ↗](https://material.angular.io)                      | ^21.0.0  |
+| [Angular Platform Browser ↗](https://angular.dev/api/platform-browser) | ^21.0.0  |
+| [TypeScript ↗](https://www.typescriptlang.org)                         | ~5.9.0   |
+| [Node.js ↗](https://nodejs.org)                                        | >=24.0.0 |
+
+## Feedback
+
+- [Report a bug](https://github.com/teqbench/tbx-mat-icons/issues/new?template=bug_report.md)
+- [Request a feature](https://github.com/teqbench/tbx-mat-icons/issues/new?template=feature_request.md)
 
 ## License
 
-[Apache-2.0](LICENSE) — Copyright 2025 TeqBench
+[AGPL-3.0](LICENSE) — Copyright 2026 TeqBench

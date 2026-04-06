@@ -12,10 +12,12 @@ export default defineConfig({
             exclude: [
                 // Constants
                 'src/constants/font-set.constants.ts',
-                // Types (enums — no testable logic)
-                'src/types/icon-type.type.ts',
+                // Contracts (interface declarations — no testable logic)
+                'src/contracts/icon-resolver.contract.ts',
                 // Tokens (InjectionToken declarations — no testable logic)
                 'src/tokens/font-icon-default-font-set.token.ts',
+                // Enums (No testable logic)
+                'src/enums/icon-type.enum.ts',
             ],
             thresholds: {
                 lines: 80,

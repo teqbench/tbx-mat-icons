@@ -1,9 +1,13 @@
 {
   "name": "@teqbench/tbx-mat-icons",
-  "version": "4.0.0",
-  "description": "Abstract icon service contracts for Angular Material. Provides TbxMatBaseIconService as the shared registration/resolution base, TbxMatSvgIconService for inline SVG registration via MatIconRegistry, and TbxMatFontIconService for font ligature resolution. All are generic abstract classes — concrete implementations override initialize() to register domain keys.",
+  "version": "4.0.1",
+  "description": "Abstract icon service contracts for Angular Material. Provides TbxMatIconService as the shared registration/resolution base, TbxMatSvgIconService for inline SVG registration via MatIconRegistry, and TbxMatFontIconService for font ligature resolution. All are generic abstract classes — concrete implementations override initialize() to register domain keys.",
   "type": "module",
-  "license": "Apache-2.0",
+  "keywords": [
+    "angular",
+    "material"
+  ],
+  "license": "AGPL-3.0-only",
   "engines": {
     "node": ">=24.0.0"
   },
@@ -47,15 +51,21 @@
     "@vitest/coverage-v8": "^4.1.1",
     "angular-eslint": "^21.3.1",
     "eslint": "^9.39.2",
+    "eslint-plugin-tsdoc": "^0.5.2",
     "husky": "^9.1.7",
     "jsdom": "^26.1.0",
     "lint-staged": "^16.3.3",
     "ng-packagr": "^21.2.1",
     "prettier": "^3.8.1",
     "typescript": "~5.9.0",
-    "typescript-eslint": "8.57.2",
+    "typescript-eslint": "8.58.0",
     "vitest": "^4.0.18",
     "zone.js": "^0.15.0"
+  },
+  "overrides": {
+    "@angular/build": {
+      "vite": "7.3.2"
+    }
   },
   "lint-staged": {
     "*.{ts,json,md,yml,yaml}": [
