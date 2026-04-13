@@ -1,0 +1,18 @@
+# Short, scannable feature bullets rendered in the README "At a glance" section.
+# Each entry: one short noun phrase, one-line explanation.
+- name: Abstract-base service pattern
+  summary: Three generic abstract classes (base, SVG, font) that consumers extend to register typed icon keys with ~10 lines of subclass code.
+- name: SVG rendering strategy
+  summary: TbxMatSvgIconService registers raw SVG markup with Angular Material's MatIconRegistry for rendering via the mat-icon svgIcon binding.
+- name: Font rendering strategy
+  summary: TbxMatFontIconService maps keys to ligature names and resolves a fontSet for rendering via mat-icon text content with an optional fontSet binding.
+- name: Strategy discriminant
+  summary: Both services expose an iconType property (Font or Svg) so consumers can branch on rendering strategy at runtime without coupling to implementation details.
+- name: Compile-time-safe icon keys
+  summary: Services are generic over T extends string — use an enum or union for typed keys with compile-time protection against typos in register() and resolve().
+- name: Three-step fontSet cascade
+  summary: Constructor argument → TBX_MAT_FONT_ICON_DEFAULT_FONT_SET token → MAT_ICON_DEFAULT_OPTIONS — pick whichever matches your setup without ambiguity.
+- name: Bundled Material Symbols constants
+  summary: Three fontSet constants (rounded, outlined, sharp) for the common Material Symbols variants that Google ships, so consumers avoid magic strings.
+- name: Override-friendly registration
+  summary: register() replaces any previous mapping, so subclasses can override parent defaults; call initialize() again to restore the default set.

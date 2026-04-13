@@ -1,0 +1,11 @@
+# Downstream @teqbench packages that consume this one, rendered in the
+# README "Related packages" section and on the website's Resources tab.
+- name: "@teqbench/tbx-mat-severity-icons"
+  url: https://github.com/teqbench/tbx-mat-severity-icons
+  summary: Severity-leveled icon resolver built on this package's service contracts.
+- name: "@teqbench/tbx-mat-banners"
+  url: https://github.com/teqbench/tbx-mat-banners
+  summary: Banner component and service using severity icons from this package.
+- name: "@teqbench/tbx-mat-notifications"
+  url: https://github.com/teqbench/tbx-mat-notifications
+  summary: Notification service using severity icons from this package.
