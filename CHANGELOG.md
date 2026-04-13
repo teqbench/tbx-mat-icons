@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.1.0](https://github.com/teqbench/tbx-mat-icons/compare/v4.0.2...v4.1.0) (2026-04-13)
+
+
+### Features
+
+* **docs:** overhaul README and adopt the per-package docs pipeline ([888aef6](https://github.com/teqbench/tbx-mat-icons/commit/888aef6a8e184f5984777a16326a4d0eb0c58c82))
+* **docs:** overhaul README and adopt the per-package docs pipeline ([4241267](https://github.com/teqbench/tbx-mat-icons/commit/4241267c60a929119d54268fc76cc2a08ecd421f))
+
 ## [4.0.2](https://github.com/teqbench/tbx-mat-icons/compare/v4.0.1...v4.0.2) (2026-04-06)
 
 
