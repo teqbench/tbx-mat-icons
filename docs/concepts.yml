@@ -1,0 +1,17 @@
+# Glossary rendered in the README "Concepts" section. Term -> one-line definition.
+- term: Icon key
+  definition: The domain-specific name a consumer registers and resolves icons by — typically a value from an enum or string-union type.
+- term: Rendering strategy
+  definition: How the resolved icon value is drawn — either SVG (inline markup via MatIconRegistry) or font (ligature name in a specific fontSet).
+- term: iconType discriminant
+  definition: The readonly Font or Svg value on every icon service that tells consumers which Angular Material binding to use at the call site.
+- term: Ligature
+  definition: A named glyph inside an icon font (e.g. check_circle) that renders when the font is applied and the name is placed as text content.
+- term: fontSet
+  definition: The CSS font-family identifier for an icon font (e.g. material-symbols-rounded) — the font the ligature is drawn from.
+- term: fontSet cascade
+  definition: The three-step precedence for resolving a font service's fontSet — constructor argument, then TBX_MAT_FONT_ICON_DEFAULT_FONT_SET token, then MAT_ICON_DEFAULT_OPTIONS.
+- term: MatIconRegistry
+  definition: Angular Material's shared registry that maps svgIcon names to inline SVG markup and is accessed by mat-icon when rendering via svgIcon binding.
+- term: Subclass initialize()
+  definition: The protected hook consumers override in concrete icon services to populate the registry via register() calls; invoked once from the base-class constructor.
