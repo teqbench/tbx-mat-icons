@@ -374,12 +374,16 @@ Abstract base class for font-based icon services. Extends `TbxMatIconService` wi
 
 ### Axis reference
 
-| Axis   | Range   | Default | Description                                                                                                     |
-| ------ | ------- | ------- | --------------------------------------------------------------------------------------------------------------- |
-| `FILL` | 0‑1     | 0       | Outlined (0) or filled (1). A single icon renders both states — no separate icon set needed.                    |
-| `wght` | 100‑700 | 400     | Stroke weight. Higher values produce bolder icons for visual emphasis and hierarchy.                            |
-| `GRAD` | ‑50‑200 | 0       | Grade. Fine-grained weight adjustment without changing icon size. Works across text and icons for visual unity. |
-| `opsz` | 20‑48   | 48      | Optical size. Automatically adjusts stroke weight at different display sizes for consistent appearance.         |
+<dl>
+    <dt><code>FILL</code></dt>
+    <dd>Range: 0‑1. Default: <code>0</code>. Outlined (0) or filled (1). A single icon renders both states — no separate icon set needed.</dd>
+    <dt><code>wght</code></dt>
+    <dd>Range: 100‑700. Default: <code>400</code>. Stroke weight. Higher values produce bolder icons for visual emphasis and hierarchy.</dd>
+    <dt><code>GRAD</code></dt>
+    <dd>Range: ‑50‑200. Default: <code>0</code>. Grade. Fine-grained weight adjustment without changing icon size. Works across text and icons for visual unity.</dd>
+    <dt><code>opsz</code></dt>
+    <dd>Range: 20‑48. Default: <code>48</code>. Optical size. Automatically adjusts stroke weight at different display sizes for consistent appearance.</dd>
+</dl>
 
 ### FILL — outlined vs filled
 
@@ -527,6 +531,8 @@ Replace `Rounded` with `Outlined` or `Sharp` to match the font set used in your 
 Not applicable — abstract service contracts, no UI surface. Consumers that render `<mat-icon>` with the values produced by these services are responsible for pairing each icon with an accessible label (either via adjacent text, `aria-label`, or `aria-hidden="true"` when the icon is decorative).
 
 ## Compatibility
+
+<!-- Kept as a pipe table until teqbench/.github#22 lands; the centralized CI README version-check regex extracts versions from this exact shape. -->
 
 | Dependency                                                             | Version  |
 | ---------------------------------------------------------------------- | -------- |
