@@ -1,5 +1,26 @@
 # Changelog
 
+## [4.2.0](https://github.com/teqbench/tbx-mat-icons/compare/v4.1.0...v4.2.0) (2026-05-04)
+
+
+### Features
+
+* **community:** adopt org-default community health files ([afe8645](https://github.com/teqbench/tbx-mat-icons/commit/afe8645ef1b5cc34dbfc09b31b40954fcc0c8453))
+
+
+### Bug Fixes
+
+* align package with org docs, conventions, and post-Renovate state ([278c628](https://github.com/teqbench/tbx-mat-icons/commit/278c628a9b68ef88d02945a631fe460d4f8afe66))
+* **claude:** add Markdown Tables Convention section ([2cb60db](https://github.com/teqbench/tbx-mat-icons/commit/2cb60db150c628803767d76539eb0cc7960abb90))
+* **claude:** append secrets and privacy bullets to NOT Do list ([4d5edd2](https://github.com/teqbench/tbx-mat-icons/commit/4d5edd29f31fc4e7806d75012bd3a1966c08d4d9))
+* **claude:** link the org-level renovate doc ([c6c4940](https://github.com/teqbench/tbx-mat-icons/commit/c6c49406d10d8351e53c346a9b1b5967509590a6))
+* **claude:** list emitted APF entry-point keys in Publishing ([a83cb24](https://github.com/teqbench/tbx-mat-icons/commit/a83cb24a0ebd822a348be0cc2aaa74e3b712c5be))
+* **claude:** list related.yml in the docs/ bullet ([49b36ce](https://github.com/teqbench/tbx-mat-icons/commit/49b36ce4a1463dec1782bb0a13ff831a6bdfb875))
+* **claude:** update Project Structure to match tbx-models ([0e61d60](https://github.com/teqbench/tbx-mat-icons/commit/0e61d60f9b06adf9dfc897141e456fe6c4749ff7))
+* **docs:** link Angular Material on overview.md line 39 ([2afd174](https://github.com/teqbench/tbx-mat-icons/commit/2afd17458e42bece6784d083058e2599850ca319))
+* **docs:** replace markdown tables with definition lists ([2c32fa0](https://github.com/teqbench/tbx-mat-icons/commit/2c32fa03d7cb7e34009d7517611a9ab69cdc8c82))
+* remove dependabot artifacts after migration to renovate ([09a7bb7](https://github.com/teqbench/tbx-mat-icons/commit/09a7bb7d44eebf9ab4e134eff6a47dec3288c8a2))
+
 ## [4.1.0](https://github.com/teqbench/tbx-mat-icons/compare/v4.0.2...v4.1.0) (2026-04-13)
 
 
