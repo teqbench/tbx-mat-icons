@@ -374,12 +374,16 @@ Abstract base class for font-based icon services. Extends `TbxMatIconService` wi
 
 ### Axis reference
 
-| Axis   | Range   | Default | Description                                                                                                     |
-| ------ | ------- | ------- | --------------------------------------------------------------------------------------------------------------- |
-| `FILL` | 0‑1     | 0       | Outlined (0) or filled (1). A single icon renders both states — no separate icon set needed.                    |
-| `wght` | 100‑700 | 400     | Stroke weight. Higher values produce bolder icons for visual emphasis and hierarchy.                            |
-| `GRAD` | ‑50‑200 | 0       | Grade. Fine-grained weight adjustment without changing icon size. Works across text and icons for visual unity. |
-| `opsz` | 20‑48   | 48      | Optical size. Automatically adjusts stroke weight at different display sizes for consistent appearance.         |
+<dl>
+    <dt><code>FILL</code></dt>
+    <dd>Range: 0‑1. Default: <code>0</code>. Outlined (0) or filled (1). A single icon renders both states — no separate icon set needed.</dd>
+    <dt><code>wght</code></dt>
+    <dd>Range: 100‑700. Default: <code>400</code>. Stroke weight. Higher values produce bolder icons for visual emphasis and hierarchy.</dd>
+    <dt><code>GRAD</code></dt>
+    <dd>Range: ‑50‑200. Default: <code>0</code>. Grade. Fine-grained weight adjustment without changing icon size. Works across text and icons for visual unity.</dd>
+    <dt><code>opsz</code></dt>
+    <dd>Range: 20‑48. Default: <code>48</code>. Optical size. Automatically adjusts stroke weight at different display sizes for consistent appearance.</dd>
+</dl>
 
 ### FILL — outlined vs filled
 
@@ -528,6 +532,8 @@ Not applicable — abstract service contracts, no UI surface. Consumers that ren
 
 ## Compatibility
 
+<!-- Kept as a pipe table until teqbench/.github#22 lands; the centralized CI README version-check regex extracts versions from this exact shape. -->
+
 | Dependency                                                             | Version  |
 | ---------------------------------------------------------------------- | -------- |
 | [Angular ↗](https://angular.dev)                                       | ^21.0.0  |
@@ -548,11 +554,11 @@ This package follows [Semantic Versioning ↗](https://semver.org/). Versions an
 
 ## Contributing
 
-Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for local setup, [GitHub Packages ↗](https://github.com/orgs/teqbench/packages) authentication, branch conventions, commit format, and the PR workflow.
+Contributions are welcome. See the [contributing guide ↗](https://github.com/teqbench/.github/blob/main/CONTRIBUTING.md) for local setup, [GitHub Packages ↗](https://github.com/orgs/teqbench/packages) authentication, branch conventions, commit format, and the PR workflow.
 
 ## Security
 
-See [SECURITY.md](SECURITY.md) for the supported-version policy and how to report a vulnerability privately.
+See the [security policy ↗](https://github.com/teqbench/.github/blob/main/SECURITY.md) for the supported-version policy and how to report a vulnerability privately.
 
 ## Feedback
 

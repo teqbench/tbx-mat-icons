@@ -36,7 +36,7 @@ Font icons need to know which font family to render with. The three-step cascade
 
 1. **Per-service**: pass a fontSet string to `super()` in the subclass constructor. Scoped to that one service.
 2. **Application-wide tbx default**: provide `TBX_MAT_FONT_ICON_DEFAULT_FONT_SET` in `app.config.ts`. All `TbxMatFontIconService` subclasses that don't pass a constructor argument inherit it.
-3. **Angular Material-wide default**: provide `MAT_ICON_DEFAULT_OPTIONS` with a `fontSet`. Angular Material's `<mat-icon>` already uses this as its global default, so the service picks up the same value and consumers don't need to bind `[fontSet]`.
+3. **Angular Material-wide default**: provide `MAT_ICON_DEFAULT_OPTIONS` with a `fontSet`. [Angular Material's ↗](https://material.angular.dev) `<mat-icon>` already uses this as its global default, so the service picks up the same value and consumers don't need to bind `[fontSet]`.
 
 Step 3 is the minimal-setup path (no binding, no token); step 1 is the explicit per-service override; step 2 is the escape hatch when you want tbx services on a different fontSet than the rest of `<mat-icon>` usage.
 
