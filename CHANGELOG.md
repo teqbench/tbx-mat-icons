@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.2.2](https://github.com/teqbench/tbx-mat-icons/compare/v4.2.1...v4.2.2) (2026-05-10)
+
+
+### Bug Fixes
+
+* **ci:** pin reusable workflows to [@v2](https://github.com/v2).9.3 ([b923c81](https://github.com/teqbench/tbx-mat-icons/commit/b923c814252c9bde27f79bb078a0e63dd3c4abf0)), closes [#28](https://github.com/teqbench/tbx-mat-icons/issues/28)
+
 ## [4.2.1](https://github.com/teqbench/tbx-mat-icons/compare/v4.2.0...v4.2.1) (2026-05-09)
 
 
