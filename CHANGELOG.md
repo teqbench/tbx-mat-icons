@@ -5,14 +5,14 @@
 
 ### Bug Fixes
 
-* **ci:** pin reusable workflows to [@v2](https://github.com/v2).9.3 ([b923c81](https://github.com/teqbench/tbx-mat-icons/commit/b923c814252c9bde27f79bb078a0e63dd3c4abf0)), closes [#28](https://github.com/teqbench/tbx-mat-icons/issues/28)
+* **ci:** pin reusable workflows to v2.9.3 ([b923c81](https://github.com/teqbench/tbx-mat-icons/commit/b923c814252c9bde27f79bb078a0e63dd3c4abf0)), closes [#28](https://github.com/teqbench/tbx-mat-icons/issues/28)
 
 ## [4.2.1](https://github.com/teqbench/tbx-mat-icons/compare/v4.2.0...v4.2.1) (2026-05-09)
 
 
 ### Bug Fixes
 
-* **ci:** pin reusable workflows to [@v2](https://github.com/v2).6.0 ([6da0755](https://github.com/teqbench/tbx-mat-icons/commit/6da07556bc98f0dcbca9f59ca30d9cc57e9d609a))
+* **ci:** pin reusable workflows to v2.6.0 ([6da0755](https://github.com/teqbench/tbx-mat-icons/commit/6da07556bc98f0dcbca9f59ca30d9cc57e9d609a))
 
 ## [4.2.0](https://github.com/teqbench/tbx-mat-icons/compare/v4.1.0...v4.2.0) (2026-05-04)
 
