@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.2.3](https://github.com/teqbench/tbx-mat-icons/compare/v4.2.2...v4.2.3) (2026-05-10)
+
+
+### Bug Fixes
+
+* **changelog:** strip broken at-mention autolinks from history ([7393c6a](https://github.com/teqbench/tbx-mat-icons/commit/7393c6a11b6e16bb1c1091c2063cd210d0aee705))
+* **changelog:** strip broken at-mention autolinks from history ([1d7f919](https://github.com/teqbench/tbx-mat-icons/commit/1d7f919cc0d12ea6b6438681946ee39dbcb6176b))
+
 ## [4.2.2](https://github.com/teqbench/tbx-mat-icons/compare/v4.2.1...v4.2.2) (2026-05-10)
 
 
