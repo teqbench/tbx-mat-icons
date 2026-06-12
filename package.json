@@ -27,7 +27,7 @@
   "peerDependencies": {
     "@angular/core": "^21.0.0",
     "@angular/material": "^21.0.0",
-    "@angular/platform-browser": "^21.0.0"
+    "@angular/platform-browser": "^21.0.0 || ^22.0.0"
   },
   "devDependenciesPinned": {
     "//": [
@@ -46,7 +46,7 @@
     "@angular/compiler-cli": "^21.2.6",
     "@angular/core": "^21.2.6",
     "@angular/material": "^21.2.4",
-    "@angular/platform-browser": "^21.2.6",
+    "@angular/platform-browser": "^22.0.0",
     "@types/node": "~24.13.0",
     "@vitest/coverage-v8": "^4.1.1",
     "angular-eslint": "^21.3.1",
