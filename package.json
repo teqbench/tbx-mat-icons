@@ -25,7 +25,7 @@
     "prepare": "husky"
   },
   "peerDependencies": {
-    "@angular/core": "^21.0.0",
+    "@angular/core": "^21.0.0 || ^22.0.0",
     "@angular/material": "^21.0.0",
     "@angular/platform-browser": "^21.0.0"
   },
@@ -44,7 +44,7 @@
     "@angular/build": "^21.2.3",
     "@angular/compiler": "^21.2.6",
     "@angular/compiler-cli": "^21.2.6",
-    "@angular/core": "^21.2.6",
+    "@angular/core": "^22.0.0",
     "@angular/material": "^21.2.4",
     "@angular/platform-browser": "^21.2.6",
     "@types/node": "~24.13.0",
